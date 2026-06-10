@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { PetPalsBrand } from '@petpals/theme/PetPalsLogo.jsx'
-import MeshBackground from '@petpals/theme/MeshBackground.jsx';
 import ThemeToggle from '@petpals/theme/ThemeToggle.jsx';
-import { Stethoscope, Mail, ShieldCheck, ArrowLeft, Heart, Sparkles } from 'lucide-react';
+import { Stethoscope, Mail, ShieldCheck, ArrowLeft, Sparkles } from 'lucide-react';
 
 const Login = ({ onLoginSuccess }) => {
     const [email, setEmail] = useState('');
@@ -47,98 +46,215 @@ const Login = ({ onLoginSuccess }) => {
     };
 
     return (
-        <div className="relative flex min-h-screen overflow-hidden text-[var(--pp-text-primary)]">
-            <MeshBackground />
-            <div className="absolute right-4 top-4 z-20">
+        <div
+            className="relative flex min-h-screen overflow-hidden"
+            style={{ background: '#F0F4F8', color: 'var(--pp-text-primary)' }}
+        >
+            {/* Theme toggle */}
+            <div className="absolute right-5 top-5 z-20">
                 <ThemeToggle />
             </div>
 
-            {/* Brand panel */}
-            <div className="pp-login-brand-panel relative z-10 hidden w-1/2 flex-col border-r border-[var(--pp-card-border)] p-12 xl:p-16 lg:flex">
-                <div className="flex items-center gap-3">
+            {/* ── Left brand panel ── */}
+            <div
+                className="hidden lg:flex w-1/2 flex-col p-12 xl:p-16 relative"
+                style={{ borderRight: '1px solid #E5E7EB' }}
+            >
+                {/* Decorative gradient blobs */}
+                <div
+                    aria-hidden
+                    style={{
+                        position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none',
+                        background: 'linear-gradient(135deg, #E8E4F8 0%, #D4E8F8 60%, #F0F4F8 100%)',
+                        opacity: 0.6,
+                    }}
+                />
+
+                <div className="relative z-10 flex items-center gap-3">
                     <PetPalsBrand logoSize="md" subtitle="Clinic portal" />
                 </div>
 
-                <div className="flex-1 flex flex-col justify-center max-w-lg mt-12">
-                    <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-brand-400/30 bg-brand-400/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-cerulean w-fit">
-                        <Sparkles size={14} />
+                <div className="relative z-10 flex-1 flex flex-col justify-center max-w-lg mt-12">
+                    <div
+                        className="mb-6 inline-flex w-fit items-center gap-2 px-4 py-1.5 text-xs font-bold uppercase tracking-widest"
+                        style={{
+                            borderRadius: 99, border: '1px solid rgba(94,196,240,0.35)',
+                            background: 'rgba(94,196,240,0.1)', color: '#0369A1',
+                        }}
+                    >
+                        <Sparkles size={13} />
                         Veterinary OS
                     </div>
-                    <h2 className="text-4xl font-black leading-tight mb-6">
+                    <h2 className="text-4xl font-black leading-tight mb-6" style={{ color: '#1A1A2E' }}>
                         The intelligent operating system for{' '}
-                        <span className="bg-gradient-to-r from-brand-400 via-cerulean-light to-pp-blush bg-clip-text text-transparent">
+                        <span style={{ background: 'linear-gradient(135deg,#5EC4F0,#3078A4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                             modern clinics
                         </span>
                     </h2>
-                    <ul className="space-y-6 text-slate-300">
+                    <ul className="space-y-5" style={{ color: '#4B5563' }}>
                         <li className="flex items-start gap-4">
-                            <ShieldCheck className="w-6 h-6 text-brand-400 shrink-0" />
-                            <span><strong className="text-white">Secure records.</strong> Encrypted patient and clinic data.</span>
+                            <div
+                                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
+                                style={{ background: 'rgba(94,196,240,0.12)', color: '#0369A1' }}
+                            >
+                                <ShieldCheck className="w-4 h-4" />
+                            </div>
+                            <span>
+                                <strong style={{ color: '#1A1A2E' }}>Secure records.</strong>{' '}
+                                Encrypted patient and clinic data.
+                            </span>
                         </li>
                         <li className="flex items-start gap-4">
-                            <Stethoscope className="w-6 h-6 text-brand-400 shrink-0" />
-                            <span><strong className="text-white">Seamless care.</strong> Appointments, billing, and history in one place.</span>
+                            <div
+                                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
+                                style={{ background: 'rgba(94,196,240,0.12)', color: '#0369A1' }}
+                            >
+                                <Stethoscope className="w-4 h-4" />
+                            </div>
+                            <span>
+                                <strong style={{ color: '#1A1A2E' }}>Seamless care.</strong>{' '}
+                                Appointments, billing, and history in one place.
+                            </span>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            {/* Auth form */}
+            {/* ── Right auth card panel ── */}
             <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 relative z-10">
-                <div className="pp-card w-full max-w-md p-8 sm:p-10">
+                <div
+                    className="w-full max-w-md"
+                    style={{
+                        background: '#FFFFFF',
+                        borderRadius: 24,
+                        border: '1px solid #F3F4F6',
+                        boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
+                        padding: '40px',
+                    }}
+                >
                     {!showReset ? (
                         <>
                             <div className="mb-8 text-center lg:text-left">
-                                <h2 className="text-3xl font-bold text-white mb-2">Welcome back</h2>
-                                <p className="text-slate-400">Sign in to your clinic portal to continue.</p>
+                                <h2 className="text-2xl font-bold mb-1.5" style={{ color: '#1A1A2E' }}>
+                                    Welcome back
+                                </h2>
+                                <p style={{ color: '#6B7280', fontSize: 14 }}>
+                                    Sign in to your clinic portal to continue.
+                                </p>
                             </div>
 
                             {error && (
-                                <div className="bg-red-500/10 text-red-300 p-4 rounded-xl text-sm mb-6 border border-red-500/20 flex items-center gap-3">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0" />
+                                <div
+                                    className="flex items-center gap-3 p-4 text-sm mb-6"
+                                    style={{
+                                        background: '#FEF2F2', color: '#991B1B',
+                                        border: '1px solid #FECACA', borderRadius: 12,
+                                    }}
+                                >
+                                    <div className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
                                     {error}
                                 </div>
                             )}
 
                             <form onSubmit={handleLogin} className="space-y-5">
                                 <div>
-                                    <label className="clinic-label">Work email</label>
+                                    <label
+                                        className="block mb-2 text-xs font-bold uppercase tracking-wider"
+                                        style={{ color: '#6B7280' }}
+                                    >
+                                        Work email
+                                    </label>
                                     <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <Mail className="h-5 w-5 text-slate-500" />
-                                        </div>
+                                        <Mail
+                                            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none"
+                                            style={{ color: '#9CA3AF' }}
+                                        />
                                         <input
                                             type="email"
                                             required
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
-                                            className="clinic-input pl-10"
                                             placeholder="doctor@clinic.com"
+                                            style={{
+                                                width: '100%', padding: '11px 14px 11px 38px',
+                                                borderRadius: 12, border: '1.5px solid #E5E7EB',
+                                                background: '#F9FAFB', fontSize: 14,
+                                                color: '#1A1A2E', outline: 'none',
+                                                transition: 'border-color 0.15s, box-shadow 0.15s',
+                                                boxSizing: 'border-box',
+                                            }}
+                                            onFocus={e => {
+                                                e.target.style.borderColor = '#5EC4F0';
+                                                e.target.style.boxShadow = '0 0 0 3px rgba(94,196,240,0.15)';
+                                            }}
+                                            onBlur={e => {
+                                                e.target.style.borderColor = '#E5E7EB';
+                                                e.target.style.boxShadow = 'none';
+                                            }}
                                         />
                                     </div>
                                 </div>
+
                                 <div>
-                                    <label className="clinic-label">Password</label>
+                                    <label
+                                        className="block mb-2 text-xs font-bold uppercase tracking-wider"
+                                        style={{ color: '#6B7280' }}
+                                    >
+                                        Password
+                                    </label>
                                     <input
                                         type="password"
                                         required
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="clinic-input"
                                         placeholder="••••••••"
+                                        style={{
+                                            width: '100%', padding: '11px 14px',
+                                            borderRadius: 12, border: '1.5px solid #E5E7EB',
+                                            background: '#F9FAFB', fontSize: 14,
+                                            color: '#1A1A2E', outline: 'none',
+                                            transition: 'border-color 0.15s, box-shadow 0.15s',
+                                            boxSizing: 'border-box',
+                                        }}
+                                        onFocus={e => {
+                                            e.target.style.borderColor = '#5EC4F0';
+                                            e.target.style.boxShadow = '0 0 0 3px rgba(94,196,240,0.15)';
+                                        }}
+                                        onBlur={e => {
+                                            e.target.style.borderColor = '#E5E7EB';
+                                            e.target.style.boxShadow = 'none';
+                                        }}
                                     />
                                 </div>
+
                                 <div className="flex items-center justify-end">
                                     <button
                                         type="button"
                                         onClick={() => { setShowReset(true); setResetEmail(email); setError(null); }}
-                                        className="text-sm font-medium text-brand-400 hover:text-brand-300"
+                                        style={{ fontSize: 13, fontWeight: 600, color: '#0369A1', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
                                     >
                                         Forgot password?
                                     </button>
                                 </div>
-                                <button type="submit" disabled={loading} className="btn-primary keep-white w-full">
-                                    {loading ? 'Authenticating…' : 'Sign in'}
+
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    style={{
+                                        width: '100%',
+                                        padding: '13px',
+                                        borderRadius: 99,
+                                        border: 'none',
+                                        background: loading ? '#9CA3AF' : 'linear-gradient(135deg,#5EC4F0 0%,#3078A4 100%)',
+                                        color: '#fff',
+                                        fontWeight: 700,
+                                        fontSize: 15,
+                                        cursor: loading ? 'not-allowed' : 'pointer',
+                                        transition: 'filter 0.2s, transform 0.15s',
+                                        boxShadow: '0 4px 14px rgba(94,196,240,0.35)',
+                                    }}
+                                >
+                                    {loading ? 'Authenticating…' : 'Sign in →'}
                                 </button>
                             </form>
                         </>
@@ -146,40 +262,97 @@ const Login = ({ onLoginSuccess }) => {
                         <>
                             <button
                                 onClick={() => { setShowReset(false); setResetSent(false); setError(null); }}
-                                className="flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white mb-6 transition-colors"
+                                className="flex items-center gap-2 mb-6 text-sm font-semibold"
+                                style={{ color: '#6B7280', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
                             >
                                 <ArrowLeft className="w-4 h-4" /> Back to sign in
                             </button>
                             <div className="mb-6">
-                                <h2 className="text-3xl font-bold text-white mb-2">Reset password</h2>
-                                <p className="text-slate-400">Enter your work email and we&apos;ll send a reset link.</p>
+                                <h2 className="text-2xl font-bold mb-1.5" style={{ color: '#1A1A2E' }}>
+                                    Reset password
+                                </h2>
+                                <p style={{ color: '#6B7280', fontSize: 14 }}>
+                                    Enter your work email and we&apos;ll send a reset link.
+                                </p>
                             </div>
+
                             {error && (
-                                <div className="bg-red-500/10 text-red-300 p-4 rounded-xl text-sm mb-6 border border-red-500/20">{error}</div>
+                                <div
+                                    className="p-4 text-sm mb-6"
+                                    style={{
+                                        background: '#FEF2F2', color: '#991B1B',
+                                        border: '1px solid #FECACA', borderRadius: 12,
+                                    }}
+                                >
+                                    {error}
+                                </div>
                             )}
+
                             {resetSent ? (
-                                <div className="bg-emerald-500/10 text-emerald-300 p-5 rounded-xl border border-emerald-500/20 font-semibold text-sm">
+                                <div
+                                    className="p-5 font-semibold text-sm"
+                                    style={{
+                                        background: '#ECFDF5', color: '#065F46',
+                                        border: '1px solid #A7F3D0', borderRadius: 12,
+                                    }}
+                                >
                                     ✓ Reset link sent to <strong>{resetEmail}</strong>. Check your inbox.
                                 </div>
                             ) : (
                                 <form onSubmit={handleResetPassword} className="space-y-5">
                                     <div>
-                                        <label className="clinic-label">Work email</label>
+                                        <label
+                                            className="block mb-2 text-xs font-bold uppercase tracking-wider"
+                                            style={{ color: '#6B7280' }}
+                                        >
+                                            Work email
+                                        </label>
                                         <div className="relative">
-                                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                <Mail className="h-5 w-5 text-slate-500" />
-                                            </div>
+                                            <Mail
+                                                className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none"
+                                                style={{ color: '#9CA3AF' }}
+                                            />
                                             <input
                                                 type="email"
                                                 required
                                                 value={resetEmail}
                                                 onChange={(e) => setResetEmail(e.target.value)}
-                                                className="clinic-input pl-10"
                                                 placeholder="doctor@clinic.com"
+                                                style={{
+                                                    width: '100%', padding: '11px 14px 11px 38px',
+                                                    borderRadius: 12, border: '1.5px solid #E5E7EB',
+                                                    background: '#F9FAFB', fontSize: 14,
+                                                    color: '#1A1A2E', outline: 'none',
+                                                    transition: 'border-color 0.15s, box-shadow 0.15s',
+                                                    boxSizing: 'border-box',
+                                                }}
+                                                onFocus={e => {
+                                                    e.target.style.borderColor = '#5EC4F0';
+                                                    e.target.style.boxShadow = '0 0 0 3px rgba(94,196,240,0.15)';
+                                                }}
+                                                onBlur={e => {
+                                                    e.target.style.borderColor = '#E5E7EB';
+                                                    e.target.style.boxShadow = 'none';
+                                                }}
                                             />
                                         </div>
                                     </div>
-                                    <button type="submit" disabled={resetLoading} className="btn-primary w-full">
+                                    <button
+                                        type="submit"
+                                        disabled={resetLoading}
+                                        style={{
+                                            width: '100%',
+                                            padding: '13px',
+                                            borderRadius: 99,
+                                            border: 'none',
+                                            background: resetLoading ? '#9CA3AF' : 'linear-gradient(135deg,#5EC4F0 0%,#3078A4 100%)',
+                                            color: '#fff',
+                                            fontWeight: 700,
+                                            fontSize: 15,
+                                            cursor: resetLoading ? 'not-allowed' : 'pointer',
+                                            boxShadow: '0 4px 14px rgba(94,196,240,0.35)',
+                                        }}
+                                    >
                                         {resetLoading ? 'Sending…' : 'Send reset link'}
                                     </button>
                                 </form>
