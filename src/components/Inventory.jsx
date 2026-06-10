@@ -130,18 +130,18 @@ const Inventory = ({ clinicId }) => {
                             const isLowStock = item.current_stock <= item.low_stock_threshold;
 
                             return (
-                                <div key={item.item_id} className={`p-6 clinic-card flex flex-col ${isLowStock ? 'border-rose-200 bg-rose-50' : 'hover:shadow-md'}`}>
+                                <div key={item.item_id} className={`p-6 clinic-card flex flex-col ${isLowStock ? 'border-rose-200 bg-rose-50 dark:border-rose-800 dark:bg-rose-900/30' : 'hover:shadow-md'}`}>
                                     <div className="flex justify-between items-start mb-4">
                                         <div className="flex-1 pr-2">
                                             <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
                                                 {getCategoryIcon(item.category)}
                                                 {item.category}
                                             </div>
-                                            <h4 className="text-lg font-bold text-white leading-tight">{item.item_name}</h4>
+                                            <h4 className="text-lg font-bold text-[color:var(--pp-text-primary)] leading-tight">{item.item_name}</h4>
                                         </div>
                                         <div className="bg-white/5/5 border border-white/10 px-2.5 py-1.5 rounded-lg shrink-0">
                                             <span className="text-[10px] font-bold text-slate-400 block leading-none mb-0.5 uppercase tracking-wider">Price</span>
-                                            <span className="font-bold text-white text-sm leading-none">EGP {item.unit_price}</span>
+                                            <span className="font-bold text-[color:var(--pp-text-primary)] text-sm leading-none">EGP {item.unit_price}</span>
                                         </div>
                                     </div>
 
@@ -149,7 +149,7 @@ const Inventory = ({ clinicId }) => {
                                         <div className="flex justify-between items-end mt-4 pt-4 border-t border-white/10">
                                             <div>
                                                 <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-1">In Stock</p>
-                                                <p className={`text-3xl font-black leading-none ${isLowStock ? 'text-rose-600' : 'text-slate-800'}`}>
+                                                <p className={`text-3xl font-black leading-none ${isLowStock ? 'text-rose-600 dark:text-rose-400' : 'text-[color:var(--pp-text-primary)]'}`}>
                                                     {item.current_stock}
                                                 </p>
                                             </div>

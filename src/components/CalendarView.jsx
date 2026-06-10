@@ -214,30 +214,34 @@ const CalendarView = ({ clinicId }) => {
                     height: 100%;
                     display: flex;
                     flex-direction: column;
-                    --fc-border-color: #F3F4F6;
-                    --fc-button-bg-color: #5EC4F0;
-                    --fc-button-border-color: #5EC4F0;
+                    --fc-border-color: var(--pp-card-border);
+                    --fc-button-bg-color: var(--pp-sky);
+                    --fc-button-border-color: var(--pp-sky);
                     --fc-button-hover-bg-color: #3aafde;
                     --fc-button-hover-border-color: #3aafde;
-                    --fc-button-active-bg-color: #1A1A2E;
-                    --fc-button-active-border-color: #1A1A2E;
-                    --fc-today-bg-color: #EFF9FE;
-                    --fc-page-bg-color: #ffffff;
-                    --fc-neutral-bg-color: #F9FAFB;
+                    --fc-button-active-bg-color: var(--pp-charcoal);
+                    --fc-button-active-border-color: var(--pp-charcoal);
+                    --fc-today-bg-color: rgba(94, 196, 240, 0.1);
+                    --fc-page-bg-color: transparent;
+                    --fc-neutral-bg-color: var(--pp-input-bg);
                     --fc-event-text-color: #ffffff;
+                    color: var(--pp-text-primary);
                 }
                 .custom-calendar .fc {
                     height: 100%;
                     font-family: inherit;
                 }
                 .fc-theme-standard th, .fc-theme-standard td, .fc-theme-standard .fc-scrollgrid {
-                    border-color: #F3F4F6;
+                    border-color: var(--pp-card-border) !important;
                 }
                 .fc .fc-toolbar {
                     padding: 16px 20px;
                     margin-bottom: 0 !important;
                 }
-                .fc .fc-toolbar-title { font-size: 1.1rem; font-weight: 700; color: #1A1A2E; }
+                .fc .fc-toolbar-title { font-size: 1.1rem; font-weight: 700; color: var(--pp-text-primary); }
+                .fc .fc-col-header-cell-cushion, .fc .fc-daygrid-day-number, .fc .fc-timegrid-slot-label-cushion {
+                    color: var(--pp-text-secondary);
+                }
                 .fc .fc-button {
                     text-transform: capitalize;
                     font-weight: 600;

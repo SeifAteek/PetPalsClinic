@@ -284,8 +284,8 @@ const ClientChat = ({ clinicId }) => {
                                             <div className={`max-w-[70%] sm:max-w-md flex flex-col ${isClinic ? 'items-end' : 'items-start'}`}>
                                                 <div className={`px-5 py-3 shadow-sm text-sm ${
                                                     isClinic
-                                                        ? 'bg-brand-600 text-white rounded-2xl rounded-tr-sm'
-                                                        : 'clinic-card border-white/10 text-slate-100 rounded-2xl rounded-tl-sm'
+                                                        ? 'bg-brand-600 text-[#1A1A2E] font-medium rounded-2xl rounded-tr-sm'
+                                                        : 'clinic-card border-white/10 text-[color:var(--pp-text-primary)] rounded-2xl rounded-tl-sm'
                                                 }`}>
                                                     <p className="leading-relaxed">{msg.text}</p>
                                                 </div>

@@ -16,7 +16,7 @@ export default function MeshBackground() {
       <div
         className="pp-mesh pp-mesh--dark"
         aria-hidden
-        style={{ background: darkBgGradient }}
+        style={{ background: '#0F172A' }}
       />
     );
   }

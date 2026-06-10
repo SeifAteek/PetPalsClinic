@@ -25,9 +25,9 @@ import CalendarView from "./CalendarView";
 import ClinicServices from "./ClinicServices";
 
 /* ── Sky-blue brand colour (no gradients) ─────────────────────────── */
-const SKY  = '#5EC4F0';
-const NAVY = '#1A1A2E';
-const BG   = '#F0F4F8';
+const SKY  = 'var(--pp-sky)';
+const NAVY = 'var(--pp-text-primary)';
+const BG   = 'var(--pp-bg)';
 
 const navigation = [
     { id: 'appointments', label: 'Appointments',        icon: Clock },
@@ -53,8 +53,8 @@ const sidebarBase = {
     zIndex: 40,
     display: 'flex',
     flexDirection: 'column',
-    background: '#FFFFFF',
-    borderRight: '1px solid #E5E7EB',
+    background: 'var(--pp-sidebar-bg)',
+    borderRight: '1px solid var(--pp-card-border)',
     boxShadow: '2px 0 8px rgba(0,0,0,0.04)',
     overflowY: 'auto',
     overflowX: 'hidden',
@@ -139,7 +139,7 @@ const ClinicDashboard = () => {
                 aria-label="Main navigation"
             >
                 {/* Logo row */}
-                <div style={{ padding: sidebarCollapsed ? '20px 0' : '20px 16px', display: 'flex', alignItems: 'center', justifyContent: sidebarCollapsed ? 'center' : 'space-between', borderBottom: '1px solid #F3F4F6', flexShrink: 0 }}>
+                <div style={{ padding: sidebarCollapsed ? '20px 0' : '20px 16px', display: 'flex', alignItems: 'center', justifyContent: sidebarCollapsed ? 'center' : 'space-between', borderBottom: '1px solid var(--pp-card-border)', flexShrink: 0 }}>
                     {!sidebarCollapsed && (
                         <div style={{ display: 'flex', alignItems: 'center', gap: 8, overflow: 'hidden' }}>
                             <PetPalsBrand logoSize="md" />
@@ -155,7 +155,7 @@ const ClinicDashboard = () => {
                         onClick={() => setSidebarCollapsed(c => !c)}
                         title={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
                         aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-                        style={{ width: 28, height: 28, borderRadius: 8, border: '1px solid #E5E7EB', background: '#F9FAFB', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0, marginLeft: sidebarCollapsed ? 0 : 'auto', color: '#6B7280' }}
+                        style={{ width: 28, height: 28, borderRadius: 8, border: '1px solid var(--pp-input-border)', background: 'var(--pp-input-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0, marginLeft: sidebarCollapsed ? 0 : 'auto', color: 'var(--pp-text-muted)' }}
                     >
                         {sidebarCollapsed ? <ChevronRightIcon size={14} /> : <ChevronLeft size={14} />}
                     </button>
@@ -186,14 +186,14 @@ const ClinicDashboard = () => {
                                     whiteSpace: 'nowrap',
                                     overflow: 'hidden',
                                     background: isActive ? SKY : 'transparent',
-                                    color:      isActive ? '#FFFFFF' : '#4B5563',
+                                    color:      isActive ? '#FFFFFF' : 'var(--pp-text-secondary)',
                                     width: '100%',
                                     textAlign: 'left',
                                     outline: 'none',
                                 }}
-                                onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = '#F0F4F8'; }}
+                                onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = 'var(--pp-bg)'; }}
                                 onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent'; }}
-                                onFocus={e => { if (!isActive) e.currentTarget.style.background = '#F0F4F8'; }}
+                                onFocus={e => { if (!isActive) e.currentTarget.style.background = 'var(--pp-bg)'; }}
                                 onBlur={e => { if (!isActive) e.currentTarget.style.background = 'transparent'; }}
                             >
                                 <item.icon
@@ -213,7 +213,7 @@ const ClinicDashboard = () => {
                 </nav>
 
                 {/* Bottom: theme toggle + logout */}
-                <div style={{ padding: '8px', borderTop: '1px solid #F3F4F6', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                <div style={{ padding: '8px', borderTop: '1px solid var(--pp-card-border)', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 4 }}>
                     {!sidebarCollapsed && (
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px' }}>
                             <span style={{ fontSize: 12, color: '#9CA3AF', fontWeight: 500, flex: 1 }}>Theme</span>
@@ -262,8 +262,8 @@ const ClinicDashboard = () => {
                     style={{
                         position: 'sticky', top: 0, zIndex: 30,
                         height: 60, minHeight: 60,
-                        background: '#FFFFFF',
-                        borderBottom: '1px solid #F3F4F6',
+                        background: 'var(--pp-header-bg)',
+                        borderBottom: '1px solid var(--pp-card-border)',
                         display: 'flex', alignItems: 'center',
                         padding: '0 24px', gap: 14,
                         boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
