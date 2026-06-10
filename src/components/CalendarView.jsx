@@ -116,21 +116,21 @@ const CalendarView = ({ clinicId }) => {
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '20px 24px 0', boxSizing: 'border-box' }}>
             <div className="flex justify-between items-end mb-8">
                 <div>
-                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                    <h3 className="text-xl font-bold text-[color:var(--pp-text-primary)] flex items-center gap-2">
                         Visual Schedule
                     </h3>
                     <p className="text-sm text-slate-500 mt-1">Calendar overview of daily and weekly bookings.</p>
                 </div>
                 <div className="hidden md:flex items-center gap-3 text-xs font-semibold">
                     {[['Confirmed','bg-teal-500'],['Pending','bg-indigo-500'],['Completed','bg-emerald-500'],['Missed','bg-orange-500'],['Cancelled','bg-slate-400']].map(([label, color]) => (
-                        <span key={label} className="flex items-center gap-1.5 text-slate-300">
+                        <span key={label} className="flex items-center gap-1.5 text-[color:var(--pp-text-secondary)]">
                             <span className={`w-2.5 h-2.5 rounded-full ${color}`}></span>{label}
                         </span>
                     ))}
                 </div>
             </div>
 
-            <div style={{ flex: 1, background: '#fff', borderRadius: '16px 16px 0 0', border: '1px solid #F3F4F6', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ flex: 1, background: 'var(--pp-card-bg)', borderRadius: '16px 16px 0 0', border: '1px solid var(--pp-card-border)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 {isLoading ? (
                     <div className="flex-1 flex items-center justify-center pt-20">
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-600"></div>
