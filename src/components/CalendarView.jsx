@@ -169,9 +169,9 @@ const CalendarView = ({ clinicId }) => {
                 const { icon: StatusIcon, color, bg, border } = getStatusStyle(selectedEvent.status);
                 return (
                     <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={() => setSelectedEvent(null)}>
-                        <div className="bg-white/5 rounded-2xl shadow-xl w-full max-w-sm animate-in zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
-                            <div className="flex justify-between items-center px-6 py-4 border-b border-white/10">
-                                <h3 className="font-bold text-white text-lg">Appointment Detail</h3>
+                        <div className="clinic-card rounded-2xl shadow-xl w-full max-w-sm animate-in zoom-in-95 duration-200 border border-slate-200 dark:border-slate-700" onClick={e => e.stopPropagation()}>
+                            <div className="flex justify-between items-center px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                                <h3 className="font-bold text-[color:var(--pp-text-primary)] text-lg">Appointment Detail</h3>
                                 <button onClick={() => setSelectedEvent(null)} className="p-1.5 rounded-lg text-slate-400 hover:bg-white/5/10 hover:text-slate-300 transition-colors">
                                     <X className="w-5 h-5" />
                                 </button>
@@ -181,21 +181,21 @@ const CalendarView = ({ clinicId }) => {
                                     <div className="w-10 h-10 rounded-full bg-white/5/10 flex items-center justify-center"><User className="w-5 h-5 text-slate-500" /></div>
                                     <div>
                                         <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Client</p>
-                                        <p className="font-bold text-white">{selectedEvent.client}</p>
+                                        <p className="font-bold text-[color:var(--pp-text-primary)]">{selectedEvent.client}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-full bg-white/5/10 flex items-center justify-center"><Clock className="w-5 h-5 text-slate-500" /></div>
                                     <div>
                                         <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Time</p>
-                                        <p className="font-semibold text-slate-100">{new Date(selectedEvent.time).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
+                                        <p className="font-semibold text-[color:var(--pp-text-secondary)]">{new Date(selectedEvent.time).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-full bg-white/5/10 flex items-center justify-center"><FileText className="w-5 h-5 text-slate-500" /></div>
                                     <div>
                                         <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Reason</p>
-                                        <p className="font-semibold text-slate-100">{selectedEvent.reason || '—'}</p>
+                                        <p className="font-semibold text-[color:var(--pp-text-secondary)]">{selectedEvent.reason || '—'}</p>
                                     </div>
                                 </div>
                                 <div className={`flex items-center gap-2 px-4 py-3 rounded-xl border ${bg} ${border}`}>
@@ -280,8 +280,8 @@ const CalendarView = ({ clinicId }) => {
                 .pp-appt-status-missed     { background-color: #f97316 !important; }
                 .pp-appt-status-cancelled  { background-color: #94a3b8 !important; }
                 .fc-timegrid-slot { height: 3rem !important; }
-                .fc-col-header-cell { background: #F9FAFB; font-size: 12px; font-weight: 700; color: #6B7280; text-transform: uppercase; letter-spacing: 0.04em; }
-                .fc-daygrid-day-number { color: #374151; font-size: 13px; font-weight: 600; }
+                .fc-col-header-cell { background: var(--pp-input-bg); font-size: 12px; font-weight: 700; color: var(--pp-text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+                .fc-daygrid-day-number { color: var(--pp-text-primary); font-size: 13px; font-weight: 600; }
                 .fc-day-today .fc-daygrid-day-number { color: #5EC4F0; font-weight: 800; }
                 `}
             </style>
