@@ -48,7 +48,7 @@ const Login = ({ onLoginSuccess }) => {
     return (
         <div
             className="relative flex min-h-screen overflow-hidden"
-            style={{ background: '#F0F4F8', color: 'var(--pp-text-primary)' }}
+            style={{ background: 'var(--pp-bg)', color: 'var(--pp-text-primary)' }}
         >
             {/* Theme toggle */}
             <div className="absolute right-5 top-5 z-20">
@@ -58,15 +58,14 @@ const Login = ({ onLoginSuccess }) => {
             {/* ── Left brand panel ── */}
             <div
                 className="hidden lg:flex w-1/2 flex-col p-12 xl:p-16 relative"
-                style={{ borderRight: '1px solid #E5E7EB' }}
+                style={{ borderRight: '1px solid var(--pp-card-border)' }}
             >
                 {/* Decorative gradient blobs */}
                 <div
                     aria-hidden
+                    className="absolute inset-0 overflow-hidden pointer-events-none opacity-60 dark:opacity-10"
                     style={{
-                        position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none',
-                        background: 'linear-gradient(135deg, #E8E4F8 0%, #D4E8F8 60%, #F0F4F8 100%)',
-                        opacity: 0.6,
+                        background: 'linear-gradient(135deg, var(--pp-primary) 0%, var(--pp-bg) 60%, var(--pp-bg) 100%)',
                     }}
                 />
 
@@ -85,34 +84,34 @@ const Login = ({ onLoginSuccess }) => {
                         <Sparkles size={13} />
                         Veterinary OS
                     </div>
-                    <h2 className="text-4xl font-black leading-tight mb-6" style={{ color: '#1A1A2E' }}>
+                    <h2 className="text-4xl font-black leading-tight mb-6" style={{ color: 'var(--pp-text-primary)' }}>
                         The intelligent operating system for{' '}
-                        <span style={{ background: 'linear-gradient(135deg,#5EC4F0,#3078A4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                        <span style={{ background: 'linear-gradient(135deg,var(--pp-sky),#3078A4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                             modern clinics
                         </span>
                     </h2>
-                    <ul className="space-y-5" style={{ color: '#4B5563' }}>
+                    <ul className="space-y-5" style={{ color: 'var(--pp-text-secondary)' }}>
                         <li className="flex items-start gap-4">
                             <div
                                 className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
-                                style={{ background: 'rgba(94,196,240,0.12)', color: '#0369A1' }}
+                                style={{ background: 'rgba(94,196,240,0.12)', color: 'var(--pp-sky)' }}
                             >
                                 <ShieldCheck className="w-4 h-4" />
                             </div>
                             <span>
-                                <strong style={{ color: '#1A1A2E' }}>Secure records.</strong>{' '}
+                                <strong style={{ color: 'var(--pp-text-primary)' }}>Secure records.</strong>{' '}
                                 Encrypted patient and clinic data.
                             </span>
                         </li>
                         <li className="flex items-start gap-4">
                             <div
                                 className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
-                                style={{ background: 'rgba(94,196,240,0.12)', color: '#0369A1' }}
+                                style={{ background: 'rgba(94,196,240,0.12)', color: 'var(--pp-sky)' }}
                             >
                                 <Stethoscope className="w-4 h-4" />
                             </div>
                             <span>
-                                <strong style={{ color: '#1A1A2E' }}>Seamless care.</strong>{' '}
+                                <strong style={{ color: 'var(--pp-text-primary)' }}>Seamless care.</strong>{' '}
                                 Appointments, billing, and history in one place.
                             </span>
                         </li>
@@ -125,20 +124,20 @@ const Login = ({ onLoginSuccess }) => {
                 <div
                     className="w-full max-w-md"
                     style={{
-                        background: '#FFFFFF',
+                        background: 'var(--pp-card-bg)',
                         borderRadius: 24,
-                        border: '1px solid #F3F4F6',
-                        boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
+                        border: '1px solid var(--pp-card-border)',
+                        boxShadow: 'var(--pp-shadow-floating)',
                         padding: '40px',
                     }}
                 >
                     {!showReset ? (
                         <>
                             <div className="mb-8 text-center lg:text-left">
-                                <h2 className="text-2xl font-bold mb-1.5" style={{ color: '#1A1A2E' }}>
+                                <h2 className="text-2xl font-bold mb-1.5" style={{ color: 'var(--pp-text-primary)' }}>
                                     Welcome back
                                 </h2>
-                                <p style={{ color: '#6B7280', fontSize: 14 }}>
+                                <p style={{ color: 'var(--pp-text-secondary)', fontSize: 14 }}>
                                     Sign in to your clinic portal to continue.
                                 </p>
                             </div>
@@ -160,14 +159,14 @@ const Login = ({ onLoginSuccess }) => {
                                 <div>
                                     <label
                                         className="block mb-2 text-xs font-bold uppercase tracking-wider"
-                                        style={{ color: '#6B7280' }}
+                                        style={{ color: 'var(--pp-text-muted)' }}
                                     >
                                         Work email
                                     </label>
                                     <div className="relative">
                                         <Mail
                                             className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none"
-                                            style={{ color: '#9CA3AF' }}
+                                            style={{ color: 'var(--pp-text-muted)' }}
                                         />
                                         <input
                                             type="email"
@@ -177,18 +176,18 @@ const Login = ({ onLoginSuccess }) => {
                                             placeholder="doctor@clinic.com"
                                             style={{
                                                 width: '100%', padding: '11px 14px 11px 38px',
-                                                borderRadius: 12, border: '1.5px solid #E5E7EB',
-                                                background: '#F9FAFB', fontSize: 14,
-                                                color: '#1A1A2E', outline: 'none',
+                                                borderRadius: 12, border: '1.5px solid var(--pp-input-border)',
+                                                background: 'var(--pp-input-bg)', fontSize: 14,
+                                                color: 'var(--pp-text-primary)', outline: 'none',
                                                 transition: 'border-color 0.15s, box-shadow 0.15s',
                                                 boxSizing: 'border-box',
                                             }}
                                             onFocus={e => {
-                                                e.target.style.borderColor = '#5EC4F0';
+                                                e.target.style.borderColor = 'var(--pp-sky)';
                                                 e.target.style.boxShadow = '0 0 0 3px rgba(94,196,240,0.15)';
                                             }}
                                             onBlur={e => {
-                                                e.target.style.borderColor = '#E5E7EB';
+                                                e.target.style.borderColor = 'var(--pp-input-border)';
                                                 e.target.style.boxShadow = 'none';
                                             }}
                                         />
@@ -198,7 +197,7 @@ const Login = ({ onLoginSuccess }) => {
                                 <div>
                                     <label
                                         className="block mb-2 text-xs font-bold uppercase tracking-wider"
-                                        style={{ color: '#6B7280' }}
+                                        style={{ color: 'var(--pp-text-muted)' }}
                                     >
                                         Password
                                     </label>
@@ -210,18 +209,18 @@ const Login = ({ onLoginSuccess }) => {
                                         placeholder="••••••••"
                                         style={{
                                             width: '100%', padding: '11px 14px',
-                                            borderRadius: 12, border: '1.5px solid #E5E7EB',
-                                            background: '#F9FAFB', fontSize: 14,
-                                            color: '#1A1A2E', outline: 'none',
+                                            borderRadius: 12, border: '1.5px solid var(--pp-input-border)',
+                                            background: 'var(--pp-input-bg)', fontSize: 14,
+                                            color: 'var(--pp-text-primary)', outline: 'none',
                                             transition: 'border-color 0.15s, box-shadow 0.15s',
                                             boxSizing: 'border-box',
                                         }}
                                         onFocus={e => {
-                                            e.target.style.borderColor = '#5EC4F0';
+                                            e.target.style.borderColor = 'var(--pp-sky)';
                                             e.target.style.boxShadow = '0 0 0 3px rgba(94,196,240,0.15)';
                                         }}
                                         onBlur={e => {
-                                            e.target.style.borderColor = '#E5E7EB';
+                                            e.target.style.borderColor = 'var(--pp-input-border)';
                                             e.target.style.boxShadow = 'none';
                                         }}
                                     />
@@ -231,7 +230,7 @@ const Login = ({ onLoginSuccess }) => {
                                     <button
                                         type="button"
                                         onClick={() => { setShowReset(true); setResetEmail(email); setError(null); }}
-                                        style={{ fontSize: 13, fontWeight: 600, color: '#0369A1', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                                        style={{ fontSize: 13, fontWeight: 600, color: 'var(--pp-sky)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
                                     >
                                         Forgot password?
                                     </button>
@@ -245,7 +244,7 @@ const Login = ({ onLoginSuccess }) => {
                                         padding: '13px',
                                         borderRadius: 99,
                                         border: 'none',
-                                        background: loading ? '#9CA3AF' : '#5EC4F0',
+                                        background: loading ? 'var(--pp-text-muted)' : 'var(--pp-sky)',
                                         color: '#fff',
                                         fontWeight: 700,
                                         fontSize: 15,
@@ -263,15 +262,15 @@ const Login = ({ onLoginSuccess }) => {
                             <button
                                 onClick={() => { setShowReset(false); setResetSent(false); setError(null); }}
                                 className="flex items-center gap-2 mb-6 text-sm font-semibold"
-                                style={{ color: '#6B7280', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                                style={{ color: 'var(--pp-text-muted)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
                             >
                                 <ArrowLeft className="w-4 h-4" /> Back to sign in
                             </button>
                             <div className="mb-6">
-                                <h2 className="text-2xl font-bold mb-1.5" style={{ color: '#1A1A2E' }}>
+                                <h2 className="text-2xl font-bold mb-1.5" style={{ color: 'var(--pp-text-primary)' }}>
                                     Reset password
                                 </h2>
-                                <p style={{ color: '#6B7280', fontSize: 14 }}>
+                                <p style={{ color: 'var(--pp-text-secondary)', fontSize: 14 }}>
                                     Enter your work email and we&apos;ll send a reset link.
                                 </p>
                             </div>
@@ -303,35 +302,34 @@ const Login = ({ onLoginSuccess }) => {
                                     <div>
                                         <label
                                             className="block mb-2 text-xs font-bold uppercase tracking-wider"
-                                            style={{ color: '#6B7280' }}
+                                            style={{ color: 'var(--pp-text-muted)' }}
                                         >
                                             Work email
                                         </label>
                                         <div className="relative">
                                             <Mail
                                                 className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none"
-                                                style={{ color: '#9CA3AF' }}
+                                                style={{ color: 'var(--pp-text-muted)' }}
                                             />
                                             <input
                                                 type="email"
                                                 required
                                                 value={resetEmail}
                                                 onChange={(e) => setResetEmail(e.target.value)}
-                                                placeholder="doctor@clinic.com"
                                                 style={{
                                                     width: '100%', padding: '11px 14px 11px 38px',
-                                                    borderRadius: 12, border: '1.5px solid #E5E7EB',
-                                                    background: '#F9FAFB', fontSize: 14,
-                                                    color: '#1A1A2E', outline: 'none',
+                                                    borderRadius: 12, border: '1.5px solid var(--pp-input-border)',
+                                                    background: 'var(--pp-input-bg)', fontSize: 14,
+                                                    color: 'var(--pp-text-primary)', outline: 'none',
                                                     transition: 'border-color 0.15s, box-shadow 0.15s',
                                                     boxSizing: 'border-box',
                                                 }}
                                                 onFocus={e => {
-                                                    e.target.style.borderColor = '#5EC4F0';
+                                                    e.target.style.borderColor = 'var(--pp-sky)';
                                                     e.target.style.boxShadow = '0 0 0 3px rgba(94,196,240,0.15)';
                                                 }}
                                                 onBlur={e => {
-                                                    e.target.style.borderColor = '#E5E7EB';
+                                                    e.target.style.borderColor = 'var(--pp-input-border)';
                                                     e.target.style.boxShadow = 'none';
                                                 }}
                                             />
@@ -345,7 +343,7 @@ const Login = ({ onLoginSuccess }) => {
                                             padding: '13px',
                                             borderRadius: 99,
                                             border: 'none',
-                                            background: resetLoading ? '#9CA3AF' : '#5EC4F0',
+                                            background: resetLoading ? 'var(--pp-text-muted)' : 'var(--pp-sky)',
                                             color: '#fff',
                                             fontWeight: 700,
                                             fontSize: 15,
