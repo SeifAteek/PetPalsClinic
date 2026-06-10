@@ -90,10 +90,10 @@ const AppointmentHistory = ({ clinicId }) => {
                             const isMissed = apt.status === 'Missed';
 
                             const statusStyle = isCompleted
-                                ? 'bg-emerald-500/10 text-emerald-300 ring-1 ring-emerald-200/50'
+                                ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200'
                                 : isMissed
-                                ? 'bg-orange-50 text-orange-700 ring-1 ring-orange-200/50'
-                                : 'bg-rose-50 text-rose-700 ring-1 ring-rose-200/50';
+                                ? 'bg-orange-50 text-orange-700 ring-1 ring-orange-200'
+                                : 'bg-rose-50 text-rose-700 ring-1 ring-rose-200';
 
                             const StatusIcon = isCompleted ? CheckCircle2 : isMissed ? AlertTriangle : XCircle;
 
@@ -125,7 +125,7 @@ const AppointmentHistory = ({ clinicId }) => {
                                             {invoice ? (
                                                 <>
                                                     <p className="font-bold text-white leading-tight">EGP {Number(invoice.total_amount).toFixed(2)}</p>
-                                                    <p className={`text-xs font-bold mt-0.5 ${invoice.status === 'Paid' ? 'text-emerald-300' : 'text-amber-500'}`}>
+                                                    <p className={`text-xs font-bold mt-0.5 ${invoice.status === 'Paid' ? 'text-emerald-600' : 'text-amber-600'}`}>
                                                         {invoice.status}
                                                     </p>
                                                 </>

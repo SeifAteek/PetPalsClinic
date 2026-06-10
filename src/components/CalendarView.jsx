@@ -78,9 +78,9 @@ const CalendarView = ({ clinicId }) => {
     };
 
     const getStatusStyle = (status) => {
-        if (status === 'Completed') return { icon: CheckCircle2, color: 'text-emerald-300', bg: 'bg-emerald-50', border: 'border-emerald-500/20' };
+        if (status === 'Completed') return { icon: CheckCircle2, color: 'text-emerald-700', bg: 'bg-emerald-50', border: 'border-emerald-200' };
         if (status === 'Missed') return { icon: AlertTriangle, color: 'text-orange-700', bg: 'bg-orange-50', border: 'border-orange-200' };
-        if (status === 'Cancelled') return { icon: XCircle, color: 'text-slate-300', bg: 'bg-white/5/10', border: 'border-white/10' };
+        if (status === 'Cancelled') return { icon: XCircle, color: 'text-slate-600', bg: 'bg-slate-100', border: 'border-slate-200' };
         if (status === 'Pending') return { icon: Clock, color: 'text-indigo-700', bg: 'bg-indigo-50', border: 'border-indigo-200' };
         return { icon: Clock, color: 'text-teal-700', bg: 'bg-teal-50', border: 'border-teal-200' };
     };
@@ -250,12 +250,16 @@ const CalendarView = ({ clinicId }) => {
                 }
                 .fc-event {
                     cursor: pointer;
-                    padding: 2px 6px;
+                    padding: 4px 8px;
                     border-radius: 6px;
                     font-size: 0.72rem;
                     font-weight: 600;
                     border: none !important;
                     box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+                    margin-bottom: 3px;
+                }
+                .fc-daygrid-day-frame {
+                    padding: 4px;
                 }
                 .fc-daygrid-block-event .fc-event-main,
                 .fc-timegrid-event .fc-event-main { color: #fff !important; }

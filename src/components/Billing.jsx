@@ -221,7 +221,7 @@ const Billing = ({ clinicId, clinicData }) => {
                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-1.5"><Wallet className="w-4 h-4"/> Total Collected</p>
                         <h4 className="text-3xl font-black text-white leading-none">EGP {totalCollected.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h4>
                     </div>
-                    <div className="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-300">
+                    <div className="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600">
                         <CheckCircle2 className="w-7 h-7" />
                     </div>
                 </div>
@@ -302,8 +302,8 @@ const Billing = ({ clinicId, clinicData }) => {
                                         )}
                                         {isPaid && (
                                              <div className="flex items-center gap-2">
-                                                <div className="text-emerald-500 bg-emerald-50 p-2 rounded-lg border border-emerald-100">
-                                                    <CheckCircle className="w-5 h-5" />
+                                                <div className="text-emerald-700 bg-emerald-50 p-2 rounded-lg border border-emerald-200">
+                                                    <CheckCircle2 className="w-6 h-6" />
                                                 </div>
                                              </div>
                                         )}

@@ -125,8 +125,8 @@ const Analytics = ({ clinicId }) => {
                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">Gross Income</p>
                         <h4 className="text-3xl font-black text-white leading-none">EGP {metrics.income.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h4>
                     </div>
-                    <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-300 shrink-0">
-                        <TrendingUp className="w-6 h-6" />
+                    <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
+                        <CheckCircle2 className="w-6 h-6" />
                     </div>
                 </div>
                 <div className="clinic-card border-white/10 shadow-sm p-6 rounded-2xl flex items-center justify-between">

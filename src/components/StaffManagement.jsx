@@ -130,7 +130,7 @@ const StaffManagement = ({ clinicId }) => {
                                 {/* Status Pill */}
                                 <div className="absolute top-5 right-5">
                                     <span className={`flex items-center gap-1 min-w-[80px] justify-center text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider ${
-                                        member.is_active ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-100' : 'bg-white/5/10 text-slate-500 border border-white/10'
+                                        member.is_active ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-50 text-slate-500 border border-slate-200'
                                     }`}>
                                         {member.is_active ? <CheckCircle2 className="w-3 h-3"/> : <XCircle className="w-3 h-3"/>}
                                         {member.is_active ? 'Active' : 'Inactive'}
@@ -163,7 +163,7 @@ const StaffManagement = ({ clinicId }) => {
                                         className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-colors ${
                                             member.is_active 
                                                 ? 'text-rose-600 hover:bg-rose-50' 
-                                                : 'text-emerald-300 hover:bg-emerald-50'
+                                                : 'text-emerald-700 hover:bg-emerald-50'
                                         }`}
                                     >
                                         {member.is_active ? 'Deactivate' : 'Reactivate'}

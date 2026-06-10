@@ -194,7 +194,7 @@ const HealthRecords = ({ clinicId }) => {
                                 <p className="text-sm font-semibold text-slate-500 mt-1">{petData.breed || 'Unknown Breed'} • {petData.age ? `${petData.age} Years` : 'Unknown Age'}</p>
                                 <div className="mt-3 flex gap-2 justify-center md:justify-start">
                                     <span className="bg-white/5/10 text-slate-300 px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wide">{petData.species}</span>
-                                    <span className={`text-xs px-2.5 py-1 rounded-md font-bold uppercase tracking-wide ${petData.status === 'Active' ? 'bg-emerald-500/10 text-emerald-300' : 'bg-rose-50 text-rose-700'}`}>
+                                    <span className={`text-xs px-2.5 py-1 rounded-md font-bold uppercase tracking-wide ${petData.status === 'Active' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}`}>
                                         {petData.status}
                                     </span>
                                 </div>

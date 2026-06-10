@@ -354,7 +354,7 @@ const Appointments = ({ clinicId, clinicData }) => {
                         {drawerMode === 'new' && (
                             <form id="new-apt-form" onSubmit={handleSaveAppointment} className="space-y-6">
                                 <div className="bg-emerald-50 text-emerald-800 p-4 rounded-xl text-sm border border-emerald-100 mb-2 flex items-start gap-3 shadow-sm rounded-br-none">
-                                    <div className="bg-emerald-500 rounded-full p-1 text-white shrink-0 mt-0.5"><Check className="w-3 h-3"/></div>
+                                    <div className="bg-emerald-600 rounded-full p-1 text-white shrink-0 mt-0.5"><Check className="w-3 h-3"/></div>
                                     <p><strong>Fast Walk-in Mode:</strong> The time has been automatically set to <strong>Right Now</strong>. Just add the name and drop them into the queue.</p>
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
@@ -412,7 +412,7 @@ const Appointments = ({ clinicId, clinicData }) => {
                                                         : 'bg-white/5 border-white/10 text-slate-300 hover:border-white/20 hover:bg-white/10 hover:shadow-sm'
                                                     }`}
                                                 >
-                                                    {isActive && <Check className="w-3.5 h-3.5 text-emerald-400" />} {proc.name}
+                                                    {isActive && <Check className="w-3.5 h-3.5 text-emerald-600" />} {proc.name}
                                                 </button>
                                             );
                                         })}
@@ -520,7 +520,7 @@ const Appointments = ({ clinicId, clinicData }) => {
                                         className={`flex-1 py-3.5 rounded-xl font-bold transition-all shadow-md flex justify-center items-center gap-2 text-base ${
                                             paymentStatus === 'Pending' 
                                             ? 'bg-slate-900 text-white hover:bg-slate-800' 
-                                            : 'bg-emerald-500 text-white hover:bg-emerald-600 shadow-emerald-500/20'
+                                            : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-emerald-600/20'
                                         } disabled:opacity-50`}
                                     >
                                         {isSubmitting ? 'Processing...' : (

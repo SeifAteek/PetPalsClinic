@@ -130,7 +130,7 @@ const Inventory = ({ clinicId }) => {
                             const isLowStock = item.current_stock <= item.low_stock_threshold;
 
                             return (
-                                <div key={item.item_id} className={`p-6 rounded-2xl border transition-all shadow-sm flex flex-col ${isLowStock ? 'border-amber-200 bg-amber-500/10/30' : 'border-white/10 bg-white/5 hover:shadow-md'}`}>
+                                <div key={item.item_id} className={`p-6 clinic-card flex flex-col ${isLowStock ? 'border-rose-200 bg-rose-50' : 'hover:shadow-md'}`}>
                                     <div className="flex justify-between items-start mb-4">
                                         <div className="flex-1 pr-2">
                                             <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
@@ -149,7 +149,7 @@ const Inventory = ({ clinicId }) => {
                                         <div className="flex justify-between items-end mt-4 pt-4 border-t border-white/10">
                                             <div>
                                                 <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-1">In Stock</p>
-                                                <p className={`text-3xl font-black leading-none ${isLowStock ? 'text-amber-600' : 'text-slate-100'}`}>
+                                                <p className={`text-3xl font-black leading-none ${isLowStock ? 'text-rose-600' : 'text-slate-800'}`}>
                                                     {item.current_stock}
                                                 </p>
                                             </div>
@@ -161,7 +161,7 @@ const Inventory = ({ clinicId }) => {
                                         </div>
                                         
                                         {isLowStock && (
-                                            <div className="mt-4 flex items-center gap-2 text-xs font-bold text-amber-300 bg-amber-100/50 px-3 py-2.5 rounded-lg border border-amber-200">
+                                            <div className="mt-4 flex items-center gap-2 text-xs font-bold text-rose-700 bg-rose-100/50 px-3 py-2.5 rounded-lg border border-rose-200">
                                                 <AlertTriangle className="w-4 h-4 shrink-0" />
                                                 Low Stock Alert
                                             </div>

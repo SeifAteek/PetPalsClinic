@@ -90,8 +90,8 @@ const PatientIntake = ({ clinicId }) => {
             </div>
 
             {successMessage && (
-                <div className="bg-emerald-50 border border-emerald-100 text-emerald-300 p-4 rounded-xl mb-6 flex items-center gap-3 animate-in fade-in duration-300">
-                    <div className="bg-emerald-100 p-1 rounded-full"><CheckCircle2 className="w-5 h-5"/></div>
+                <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-xl mb-6 flex items-center gap-3 animate-in fade-in duration-300">
+                    <div className="bg-emerald-100 p-1 rounded-full"><CheckCircle2 className="w-5 h-5 text-emerald-700"/></div>
                     <span className="font-semibold">{successMessage}</span>
                 </div>
             )}

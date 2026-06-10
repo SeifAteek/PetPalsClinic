@@ -104,8 +104,8 @@ const Settings = ({ clinicData, setClinicData }) => {
             </div>
 
             {message && (
-                <div className={`p-4 mb-6 rounded-xl font-semibold text-sm animate-in fade-in slide-in-from-top-2 flex items-center shadow-sm border ${message.includes('Error') ? 'bg-rose-500/10 text-rose-300 border-rose-500/20' : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20'}`}>
-                    {message}
+                <div className={`p-4 mb-6 rounded-xl font-semibold text-sm animate-in fade-in slide-in-from-top-2 flex items-center shadow-sm border ${message.includes('Error') ? 'bg-rose-50 text-rose-800 border-rose-200' : 'bg-emerald-50 text-emerald-800 border-emerald-200'}`}>
+                    {message.includes('Error') ? <AlertTriangle className="w-5 h-5 mr-3 text-rose-600" /> : <CheckCircle2 className="w-5 h-5 mr-3 text-emerald-600" />}{message}
                 </div>
             )}
 
