@@ -113,7 +113,7 @@ const CalendarView = ({ clinicId }) => {
     };
 
     return (
-        <div className="flex flex-col h-full">
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '20px 24px 0', boxSizing: 'border-box' }}>
             <div className="flex justify-between items-end mb-8">
                 <div>
                     <h3 className="text-xl font-bold text-white flex items-center gap-2">
@@ -130,13 +130,13 @@ const CalendarView = ({ clinicId }) => {
                 </div>
             </div>
 
-            <div className="flex-1 bg-white/5 p-6 rounded-2xl shadow-sm border border-white/10 overflow-hidden flex flex-col">
+            <div style={{ flex: 1, background: '#fff', borderRadius: '16px 16px 0 0', border: '1px solid #F3F4F6', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 {isLoading ? (
                     <div className="flex-1 flex items-center justify-center pt-20">
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-600"></div>
                     </div>
                 ) : (
-                    <div className="h-full custom-calendar overflow-y-auto">
+                    <div style={{ flex: 1, overflow: 'hidden' }} className="custom-calendar">
                         <FullCalendar
                             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                             initialView="dayGridMonth"
@@ -211,36 +211,66 @@ const CalendarView = ({ clinicId }) => {
             <style>
                 {`
                 .custom-calendar {
-                    --fc-border-color: #f1f5f9;
-                    --fc-button-bg-color: #0f172a;
-                    --fc-button-border-color: #0f172a;
-                    --fc-button-hover-bg-color: #334155;
-                    --fc-button-hover-border-color: #334155;
-                    --fc-button-active-bg-color: #14b8a6;
-                    --fc-button-active-border-color: #14b8a6;
-                    --fc-today-bg-color: #f8fafc;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    --fc-border-color: #F3F4F6;
+                    --fc-button-bg-color: #5EC4F0;
+                    --fc-button-border-color: #5EC4F0;
+                    --fc-button-hover-bg-color: #3aafde;
+                    --fc-button-hover-border-color: #3aafde;
+                    --fc-button-active-bg-color: #1A1A2E;
+                    --fc-button-active-border-color: #1A1A2E;
+                    --fc-today-bg-color: #EFF9FE;
+                    --fc-page-bg-color: #ffffff;
+                    --fc-neutral-bg-color: #F9FAFB;
+                    --fc-event-text-color: #ffffff;
+                }
+                .custom-calendar .fc {
+                    height: 100%;
+                    font-family: inherit;
                 }
                 .fc-theme-standard th, .fc-theme-standard td, .fc-theme-standard .fc-scrollgrid {
-                    border-color: #f1f5f9;
+                    border-color: #F3F4F6;
                 }
-                .fc .fc-toolbar-title { font-size: 1.25rem; font-weight: 700; color: #0f172a; font-family: "Plus Jakarta Sans", sans-serif; }
-                .fc .fc-button { text-transform: capitalize; font-weight: 600; font-family: "Plus Jakarta Sans", sans-serif; border-radius: 0.5rem; padding: 0.5rem 1rem; }
-                .fc .fc-button-primary:not(:disabled).fc-button-active, .fc .fc-button-primary:not(:disabled):active {
-                    background-color: var(--fc-button-active-bg-color);
-                    border-color: var(--fc-button-active-border-color);
+                .fc .fc-toolbar-title { font-size: 1.1rem; font-weight: 700; color: #1A1A2E; }
+                .fc .fc-button {
+                    text-transform: capitalize;
+                    font-weight: 600;
+                    border-radius: 8px;
+                    padding: 6px 14px;
+                    font-size: 13px;
+                    box-shadow: none !important;
                 }
-                .fc-event { cursor: pointer; padding: 2px 6px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; border: none !important; box-shadow: 0 1px 2px rgba(0,0,0,0.12); }
+                .fc .fc-button:focus { outline: 2px solid #5EC4F0; outline-offset: 2px; }
+                .fc .fc-button-primary:not(:disabled).fc-button-active,
+                .fc .fc-button-primary:not(:disabled):active {
+                    background-color: #1A1A2E;
+                    border-color: #1A1A2E;
+                }
+                .fc-event {
+                    cursor: pointer;
+                    padding: 2px 6px;
+                    border-radius: 6px;
+                    font-size: 0.72rem;
+                    font-weight: 600;
+                    border: none !important;
+                    box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+                }
                 .fc-daygrid-block-event .fc-event-main,
                 .fc-timegrid-event .fc-event-main { color: #fff !important; }
                 .fc-daygrid-event { border: none !important; }
                 .fc-h-event { border: none !important; }
                 .fc-v-event { border-left: 4px solid rgba(0,0,0,0.15) !important; }
-                .pp-appt-status-confirmed { background-color: #0d9488 !important; }
-                .pp-appt-status-pending { background-color: #6366f1 !important; }
-                .pp-appt-status-completed { background-color: #10b981 !important; }
-                .pp-appt-status-missed { background-color: #f97316 !important; }
-                .pp-appt-status-cancelled { background-color: #94a3b8 !important; }
+                .pp-appt-status-confirmed  { background-color: #0d9488 !important; }
+                .pp-appt-status-pending    { background-color: #6366f1 !important; }
+                .pp-appt-status-completed  { background-color: #10b981 !important; }
+                .pp-appt-status-missed     { background-color: #f97316 !important; }
+                .pp-appt-status-cancelled  { background-color: #94a3b8 !important; }
                 .fc-timegrid-slot { height: 3rem !important; }
+                .fc-col-header-cell { background: #F9FAFB; font-size: 12px; font-weight: 700; color: #6B7280; text-transform: uppercase; letter-spacing: 0.04em; }
+                .fc-daygrid-day-number { color: #374151; font-size: 13px; font-weight: 600; }
+                .fc-day-today .fc-daygrid-day-number { color: #5EC4F0; font-weight: 800; }
                 `}
             </style>
         </div>

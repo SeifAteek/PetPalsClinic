@@ -30,7 +30,7 @@ html.light {
   --pp-card-tint:      none;
   --pp-glass-stroke:   none;
 
-  --pp-brand-gradient: linear-gradient(135deg, #5EC4F0 0%, #3078A4 60%, #1A1A2E 100%);
+  --pp-brand-gradient: #5EC4F0;
 
   --pp-shadow-raised:   0 4px 12px rgba(0,0,0,0.08);
   --pp-shadow-floating: 0 8px 24px rgba(0,0,0,0.10);
@@ -172,12 +172,10 @@ html.dark {
     border-radius: var(--pp-r-pill) !important;
   }
 
-  button,
-  [role='button'],
+  /* Only pill-radius on actual form buttons, not nav items */
   input[type='button'],
   input[type='submit'],
-  input[type='reset'],
-  select {
+  input[type='reset'] {
     border-radius: var(--pp-r-pill);
   }
 
@@ -195,12 +193,21 @@ html.dark {
     width: 6px;
     height: 6px;
   }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
   ::-webkit-scrollbar-thumb {
     border-radius: 999px;
-    background: rgba(242, 164, 165, 0.35);
+    background: #D1D5DB;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #9CA3AF;
   }
   html.dark ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.15);
+  }
+  html.dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
   }
 }
 
