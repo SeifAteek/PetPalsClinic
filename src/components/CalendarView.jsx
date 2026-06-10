@@ -233,6 +233,10 @@ const CalendarView = ({ clinicId }) => {
                 .fc-theme-standard th, .fc-theme-standard td, .fc-theme-standard .fc-scrollgrid {
                     border-color: #F3F4F6;
                 }
+                .fc .fc-toolbar {
+                    padding: 16px 20px;
+                    margin-bottom: 0 !important;
+                }
                 .fc .fc-toolbar-title { font-size: 1.1rem; font-weight: 700; color: #1A1A2E; }
                 .fc .fc-button {
                     text-transform: capitalize;

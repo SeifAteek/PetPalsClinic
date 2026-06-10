@@ -97,7 +97,7 @@ const PatientIntake = ({ clinicId }) => {
             )}
 
             <div className="flex-1 overflow-y-auto pr-2 pb-8">
-                <form onSubmit={handleSubmit} className="clinic-card border-white/10 shadow-sm rounded-2xl max-w-5xl overflow-hidden">
+                <form onSubmit={handleSubmit} className="clinic-card border-white/10 shadow-sm rounded-2xl w-full overflow-hidden">
                     <div className="grid grid-cols-1 lg:grid-cols-5 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
                         
                         {/* Pet Information */}
@@ -162,12 +162,12 @@ const PatientIntake = ({ clinicId }) => {
                         {/* Owner Information */}
                         <div className="lg:col-span-2 p-8 bg-white/5/5/50 flex flex-col h-full">
                             <div className="flex items-center gap-2 mb-6">
-                                <UserPlus className="w-5 h-5 text-indigo-600" />
+                                <UserPlus className="w-5 h-5 text-[#5EC4F0]" />
                                 <h4 className="text-lg font-bold text-white">Owner Details</h4>
                             </div>
 
-                            <div className="bg-white/5 border text-xs border-indigo-100 p-4 rounded-xl text-indigo-800 mb-6 flex gap-3 items-start shadow-sm leading-relaxed">
-                                <Info className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" />
+                            <div className="bg-[#5EC4F0]/10 border text-xs border-[#5EC4F0]/30 p-4 rounded-xl text-slate-600 mb-6 flex gap-3 items-start shadow-sm leading-relaxed">
+                                <Info className="w-5 h-5 text-[#5EC4F0] shrink-0 mt-0.5" />
                                 <p><strong>Note for Walk-ins:</strong> This creates a temporary profile. The owner must download the PetPals app and link their phone number to gain digital access to records.</p>
                             </div>
 
@@ -190,7 +190,7 @@ const PatientIntake = ({ clinicId }) => {
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="w-full bg-slate-900 text-white py-4 px-4 rounded-xl font-bold hover:bg-brand-600 shadow-md transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
+                                    className="w-full bg-[#5EC4F0] text-white py-4 px-4 rounded-xl font-bold hover:bg-[#3aafde] shadow-md transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
                                 >
                                     {isSubmitting ? (
                                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>

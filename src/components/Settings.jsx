@@ -81,7 +81,7 @@ const Settings = ({ clinicData, setClinicData }) => {
     };
 
     return (
-        <div className="flex flex-col h-full relative max-w-5xl">
+        <div className="flex flex-col h-full relative w-full">
             <div className="flex justify-between items-end mb-8">
                 <div>
                     <h3 className="text-xl font-bold text-white flex items-center gap-2">

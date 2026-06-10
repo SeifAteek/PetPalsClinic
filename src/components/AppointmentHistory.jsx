@@ -67,7 +67,7 @@ const AppointmentHistory = ({ clinicId }) => {
                     placeholder="Search by patient name or reason..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full max-w-md pl-11 pr-4 py-3 rounded-xl clinic-card border-white/10 outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-100 shadow-sm transition-all"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl clinic-card border-white/10 outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-100 shadow-sm transition-all"
                 />
             </div>
 

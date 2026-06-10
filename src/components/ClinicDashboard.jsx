@@ -142,7 +142,8 @@ const ClinicDashboard = () => {
                 <div style={{ padding: sidebarCollapsed ? '20px 0' : '20px 16px', display: 'flex', alignItems: 'center', justifyContent: sidebarCollapsed ? 'center' : 'space-between', borderBottom: '1px solid #F3F4F6', flexShrink: 0 }}>
                     {!sidebarCollapsed && (
                         <div style={{ display: 'flex', alignItems: 'center', gap: 8, overflow: 'hidden' }}>
-                            <PetPalsBrand logoSize="sm" />
+                            <PetPalsBrand logoSize="md" />
+                            <span style={{ fontSize: 16, fontWeight: 800, color: '#5EC4F0', letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>Clinic App</span>
                         </div>
                     )}
                     {sidebarCollapsed && (
