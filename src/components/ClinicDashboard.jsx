@@ -130,7 +130,7 @@ const ClinicDashboard = () => {
     const isCalendar = activeTab === 'calendar';
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh', background: BG }}>
+        <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: BG }}>
             <MeshBackground />
 
             {/* ══════════════ SIDEBAR ══════════════ */}
@@ -253,7 +253,7 @@ const ClinicDashboard = () => {
                     position: 'relative',
                     zIndex: 10,
                     transition: 'margin-left 0.2s ease',
-                    minHeight: '100vh',
+                    height: '100vh',
                 }}
             >
                 {/* Top bar */}
@@ -337,8 +337,9 @@ const ClinicDashboard = () => {
                         overflow: isCalendar ? 'hidden' : 'auto',
                         display: 'flex',
                         flexDirection: 'column',
-                        /* Calendar needs explicit height so FullCalendar can fill 100% */
-                        ...(isCalendar ? { height: 'calc(100vh - 60px)' } : {}),
+                        minHeight: 0,
+                        /* Components like ClientChat need an explicit height boundary when not isCalendar */
+                        ...(!isCalendar ? { height: 'calc(100vh - 150px)' } : { height: 'calc(100vh - 60px)' }),
                     }}
                 >
                     {activeTab === 'appointments' && <Appointments clinicId={clinicData.clinic_id} clinicData={clinicData} />}

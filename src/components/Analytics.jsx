@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
-import { TrendingUp, TrendingDown, DollarSign, Plus, Package, X, Activity } from 'lucide-react';
+import { TrendingUp, TrendingDown, DollarSign, Plus, Package, X, Activity, CheckCircle2 } from 'lucide-react';
 
 const Analytics = ({ clinicId }) => {
     const [metrics, setMetrics] = useState({ income: 0, expenses: 0, net: 0 });
@@ -28,7 +28,7 @@ const Analytics = ({ clinicId }) => {
             .eq('clinic_id', clinicId)
             .eq('status', 'Paid');
 
-        const totalIncome = incomeData ? incomeData.reduce((sum, item) => sum + Number(item.total_amount), 0) : 0;
+        const totalIncome = incomeData ? incomeData.reduce((sum, item) => sum + (Number(item.total_amount) || 0), 0) : 0;
 
         const { data: expenseData } = await supabase
             .from('clinic_expenses')
@@ -36,7 +36,7 @@ const Analytics = ({ clinicId }) => {
             .eq('clinic_id', clinicId)
             .order('expense_date', { ascending: false });
 
-        const totalExpenses = expenseData ? expenseData.reduce((sum, item) => sum + Number(item.amount), 0) : 0;
+        const totalExpenses = expenseData ? expenseData.reduce((sum, item) => sum + (Number(item.amount) || 0), 0) : 0;
 
         const { data: invData } = await supabase
             .from('inventory_items')
@@ -123,7 +123,7 @@ const Analytics = ({ clinicId }) => {
                 <div className="clinic-card border-white/10 shadow-sm p-6 rounded-2xl flex items-center justify-between">
                     <div>
                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">Gross Income</p>
-                        <h4 className="text-3xl font-black text-white leading-none">EGP {(metrics.income || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h4>
+                        <h4 className="text-3xl font-black text-white leading-none">EGP {(Number(metrics.income) || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h4>
                     </div>
                     <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
                         <CheckCircle2 className="w-6 h-6" />
@@ -132,7 +132,7 @@ const Analytics = ({ clinicId }) => {
                 <div className="clinic-card border-white/10 shadow-sm p-6 rounded-2xl flex items-center justify-between">
                     <div>
                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">Total Expenses</p>
-                        <h4 className="text-3xl font-black text-rose-500 leading-none">EGP {(metrics.expenses || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h4>
+                        <h4 className="text-3xl font-black text-rose-500 leading-none">EGP {(Number(metrics.expenses) || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h4>
                     </div>
                     <div className="w-12 h-12 rounded-full bg-rose-50 flex items-center justify-center text-rose-500 shrink-0">
                         <TrendingDown className="w-6 h-6" />
@@ -142,7 +142,7 @@ const Analytics = ({ clinicId }) => {
                     <div>
                         <p className={`text-xs font-bold uppercase tracking-widest mb-2 flex items-center gap-1.5 ${metrics.net >= 0 ? 'text-[#5EC4F0]' : 'text-rose-600'}`}>Net Revenue</p>
                         <h4 className={`text-3xl font-black leading-none ${metrics.net >= 0 ? 'text-[#5EC4F0]' : 'text-rose-700'}`}>
-                            EGP {(Math.abs(metrics.net) || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                            EGP {(Math.abs(Number(metrics.net)) || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
                             {metrics.net < 0 && <span className="text-lg ml-1">(Loss)</span>}
                         </h4>
                     </div>
@@ -176,7 +176,7 @@ const Analytics = ({ clinicId }) => {
                                     </div>
                                     <p className="font-bold text-white">{exp.description}</p>
                                 </div>
-                                <p className="font-bold text-rose-600 text-lg tabular-nums">- EGP {Number(exp.amount).toFixed(2)}</p>
+                                <p className="font-bold text-rose-600 text-lg tabular-nums">- EGP {(Number(exp.amount) || 0).toFixed(2)}</p>
                             </div>
                         ))}
                     </div>

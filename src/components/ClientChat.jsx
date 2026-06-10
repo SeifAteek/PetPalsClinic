@@ -197,7 +197,7 @@ const ClientChat = ({ clinicId }) => {
     };
 
     return (
-        <div className="flex h-full bg-white/5 rounded-2xl shadow-sm border border-white/10 overflow-hidden">
+        <div className="flex w-full bg-white/5 rounded-2xl shadow-sm border border-white/10 overflow-hidden" style={{ height: 'calc(100vh - 130px)' }}>
             {/* Sidebar: Client List */}
             <div className="w-1/3 max-w-sm border-r border-white/10 bg-white/5/5 flex flex-col">
                 <div className="p-5 border-b border-white/10">
