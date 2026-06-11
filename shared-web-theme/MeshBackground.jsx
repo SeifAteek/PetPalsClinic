@@ -16,17 +16,17 @@ export default function MeshBackground() {
       <div
         className="pp-mesh pp-mesh--dark"
         aria-hidden
-        style={{ background: '#0F172A' }}
+        style={{ background: '#080E1F' }}
       />
     );
   }
 
-  // Light mode: flat background, no mesh orbs
+  // Light mode: flat lighter-cream background, no mesh orbs
   return (
     <div
       className="pp-mesh pp-mesh--light"
       aria-hidden
-      style={{ background: '#F0F4F8' }}
+      style={{ background: '#FDFAF6' }}
     />
   );
 }

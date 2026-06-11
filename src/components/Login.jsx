@@ -69,11 +69,12 @@ const Login = ({ onLoginSuccess }) => {
                     }}
                 />
 
-                <div className="relative z-10 flex items-center gap-3">
-                    <PetPalsBrand logoSize="md" subtitle="Clinic portal" />
+                {/* Logo firmly in the top left */}
+                <div className="absolute top-10 left-10 xl:top-12 xl:left-12 z-20 flex items-center gap-3">
+                    <PetPalsBrand logoSize="1.5xl" />
                 </div>
 
-                <div className="relative z-10 flex-1 flex flex-col justify-center max-w-lg mt-12">
+                <div className="relative z-10 flex-1 flex flex-col justify-center max-w-lg mt-20">
                     <div
                         className="mb-6 inline-flex w-fit items-center gap-2 px-4 py-1.5 text-xs font-bold uppercase tracking-widest"
                         style={{

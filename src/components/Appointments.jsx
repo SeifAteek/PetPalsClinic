@@ -95,6 +95,30 @@ const Appointments = ({ clinicId, clinicData }) => {
         setActiveApt(null);
     };
 
+    const handleCancelAppointment = async (appointmentId, e) => {
+        if (e) e.stopPropagation();
+        
+        const confirmed = window.confirm("Are you sure you want to cancel this appointment?");
+        if (!confirmed) return;
+
+        setIsSubmitting(true);
+        const { error } = await supabase
+            .from('appointments')
+            .update({ status: 'Cancelled' })
+            .eq('appointment_id', appointmentId)
+            .eq('clinic_id', clinicId);
+
+        if (error) {
+            alert('Failed to cancel appointment: ' + error.message);
+        } else {
+            fetchData();
+            if (activeApt?.appointment_id === appointmentId) {
+                handleCloseDrawer();
+            }
+        }
+        setIsSubmitting(false);
+    };
+
     const handleSaveAppointment = async (e) => {
         e.preventDefault();
         
@@ -272,8 +296,8 @@ const Appointments = ({ clinicId, clinicData }) => {
             <div className={`flex flex-col h-full transition-all duration-300 ${drawerMode !== 'none' ? 'w-[55%] pr-4' : 'w-full'}`}>
                 <div className="flex justify-between items-center mb-6 shrink-0">
                     <div>
-                        <h3 className="text-xl font-bold text-white">Active Queue</h3>
-                        <p className="text-sm text-slate-500 mt-1">Manage today's patient flow</p>
+                        <h3 className="text-xl font-bold text-[color:var(--pp-text-primary)]">Active Queue</h3>
+                        <p className="text-sm text-[color:var(--pp-text-muted)] mt-1">Manage today's patient flow</p>
                     </div>
                     {drawerMode === 'none' && (
                         <button onClick={handleOpenNew} className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl font-semibold shadow-sm transition-colors text-sm">
@@ -289,10 +313,10 @@ const Appointments = ({ clinicId, clinicData }) => {
                     </div>
                 ) : appointments.length === 0 ? (
                     <div className="flex-1 flex flex-col items-center justify-center text-center p-12 border-2 border-dashed border-white/10 rounded-2xl bg-white/5 shadow-sm">
-                        <CalendarIcon className="w-16 h-16 text-slate-200 mb-4" />
-                        <h4 className="font-bold text-slate-200 text-lg">Lobby is clearly empty</h4>
-                        <p className="text-slate-500 mt-1">No patients are currently waiting.</p>
-                        <button onClick={handleOpenNew} className="mt-6 border border-white/10 text-slate-200 font-semibold text-sm hover:bg-white/10 py-2 px-4 rounded-xl shadow-sm transition-colors">Register Walk-in</button>
+                        <CalendarIcon className="w-16 h-16 text-[color:var(--pp-text-muted)] mb-4" />
+                        <h4 className="font-bold text-[color:var(--pp-text-primary)] text-lg">Lobby is clearly empty</h4>
+                        <p className="text-[color:var(--pp-text-muted)] mt-1">No patients are currently waiting.</p>
+                        <button onClick={handleOpenNew} className="mt-6 border border-white/10 text-[color:var(--pp-text-secondary)] font-semibold text-sm hover:bg-white/10 py-2 px-4 rounded-xl shadow-sm transition-colors">Register Walk-in</button>
                     </div>
                 ) : (
                     <div className="space-y-4 overflow-y-auto pr-2 pb-4">
@@ -330,6 +354,13 @@ const Appointments = ({ clinicId, clinicData }) => {
                                         <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border ${isConfirmed ? 'bg-amber-500/100/10 text-amber-300 border-amber-200' : 'bg-white/5/10 text-slate-300 border-white/10'}`}>
                                             {isConfirmed ? <><Clock className="w-3.5 h-3.5"/> Waiting Room</> : <><Activity className="w-3.5 h-3.5"/> Action Req.</>}
                                         </div>
+                                        <button 
+                                            onClick={(e) => handleCancelAppointment(apt.appointment_id, e)}
+                                            title="Cancel Appointment"
+                                            className="p-1.5 text-rose-500 hover:bg-rose-500/10 rounded-lg transition-colors border border-transparent hover:border-rose-500/20"
+                                        >
+                                            <X className="w-4 h-4" />
+                                        </button>
                                         <ChevronRight className={`w-5 h-5 transition-transform ${isSelected ? 'text-brand-500' : 'text-slate-300 group-hover:text-brand-400 group-hover:translate-x-1'}`} />
                                     </div>
                                 </div>
@@ -378,6 +409,28 @@ const Appointments = ({ clinicId, clinicData }) => {
                                     <label className={`block text-xs font-bold uppercase tracking-wider mb-2 ${formErrors.reason ? 'text-rose-500' : 'text-slate-500'}`}>Patient Name & Symptoms</label>
                                     <textarea rows="4" value={formData.reason} onChange={(e) => {setFormData({...formData, reason: e.target.value}); setFormErrors({...formErrors, reason: null});}} placeholder="e.g. Leo (Golden Retriever) - Limping on right leg" className={`w-full px-4 py-3 rounded-xl border ${formErrors.reason ? 'border-rose-300 bg-rose-50 focus:border-rose-500 focus:ring-rose-500/20' : 'border-white/10 bg-white/5/5 focus:bg-white/5 focus:border-brand-500 focus:ring-brand-500/20'} text-slate-100 outline-none focus:ring-2 transition-colors resize-none`}></textarea>
                                     {formErrors.reason && <p className="text-rose-500 text-xs mt-1.5 flex items-center gap-1"><AlertCircle className="w-3 h-3"/> {formErrors.reason}</p>}
+                                </div>
+
+                                {/* Quick Schedule Reference */}
+                                <div className="mt-8 border-t border-white/10 pt-6">
+                                    <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2"><CalendarIcon className="w-4 h-4 text-brand-400" /> Today's Scheduled Appointments</h4>
+                                    {appointments.length === 0 ? (
+                                        <p className="text-sm text-slate-500 italic bg-white/5/5 p-3 rounded-xl border border-dashed border-white/10">No other appointments scheduled.</p>
+                                    ) : (
+                                        <div className="space-y-2 max-h-48 overflow-y-auto pr-2">
+                                            {appointments.map(apt => (
+                                                <div key={`sched-${apt.appointment_id}`} className="bg-white/5 p-3 rounded-xl border border-white/10 flex justify-between items-center hover:bg-white/10 transition-colors">
+                                                    <div className="min-w-0 flex-1 pr-3">
+                                                        <p className="text-sm font-bold text-white truncate">{apt.profiles?.user_name || 'Walk-in Client'}</p>
+                                                        <p className="text-xs text-slate-400 truncate">{apt.reason}</p>
+                                                    </div>
+                                                    <span className="text-xs font-semibold text-brand-400 bg-brand-500/10 px-2.5 py-1.5 rounded-md border border-brand-500/20 shrink-0">
+                                                        {new Date(apt.appointment_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </form>
                         )}
@@ -530,6 +583,13 @@ const Appointments = ({ clinicId, clinicData }) => {
                                         )}
                                     </button>
                                 </div>
+                                <button
+                                    onClick={(e) => handleCancelAppointment(activeApt.appointment_id, e)}
+                                    disabled={isSubmitting}
+                                    className="w-full mt-3 py-3 border border-rose-500/30 hover:border-rose-500 text-rose-500 rounded-xl font-bold text-sm hover:bg-rose-500/10 transition-all flex items-center justify-center gap-2"
+                                >
+                                    <X className="w-4 h-4"/> Cancel Appointment
+                                </button>
                             </div>
                         )}
                     </div>

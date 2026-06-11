@@ -7,6 +7,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   base: process.env.GITHUB_PAGES === 'true' ? '/PetPalsClinic/' : './',
+  css: {
+    lightningcss: {
+      errorRecovery: true,
+    },
+  },
   plugins: [react()],
   resolve: {
     alias: {

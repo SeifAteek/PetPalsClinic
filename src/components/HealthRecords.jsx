@@ -17,29 +17,75 @@ const HealthRecords = ({ clinicId }) => {
         treatment: '',
         vetName: ''
     });
+    
+    // Edit Pet State
+    const [showEditPetModal, setShowEditPetModal] = useState(false);
+    const [editPetForm, setEditPetForm] = useState({
+        name: '',
+        breed: '',
+        species: 'Dog',
+        age: '',
+        status: 'Active'
+    });
+
+    const openEditPetModal = () => {
+        setEditPetForm({
+            name: petData.name || '',
+            breed: petData.breed || '',
+            species: petData.species || 'Dog',
+            age: petData.age || '',
+            status: petData.status || 'Active'
+        });
+        setShowEditPetModal(true);
+    };
+
+    const handleUpdatePet = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        const { error } = await supabase
+            .from('pets')
+            .update({
+                name: editPetForm.name,
+                breed: editPetForm.breed,
+                species: editPetForm.species,
+                age: parseInt(editPetForm.age) || null,
+                status: editPetForm.status
+            })
+            .eq('pet_id', petData.pet_id);
+            
+        if (error) {
+            alert('Failed to update pet: ' + error.message);
+        } else {
+            setPetData(prev => ({ ...prev, ...editPetForm, age: parseInt(editPetForm.age) || null }));
+            setSearchResults(prev => prev.map(p => p.pet_id === petData.pet_id ? { ...p, ...editPetForm, age: parseInt(editPetForm.age) || null } : p));
+            setShowEditPetModal(false);
+        }
+        setIsSubmitting(false);
+    };
 
     useEffect(() => {
         const searchPets = async () => {
-            if (!searchQuery.trim()) {
-                setSearchResults([]);
-                setPetData(null);
-                setHealthRecords([]);
-                return;
-            }
-
             setIsLoading(true);
-            const { data: pets, error } = await supabase
+            
+            let query = supabase
                 .from('pets')
                 .select('*')
-                .ilike('name', `%${searchQuery}%`)
-                .order('name')
-                .limit(10);
+                .eq('clinic_id', clinicId)
+                .order('name');
+                
+            if (searchQuery.trim()) {
+                query = query.ilike('name', `%${searchQuery}%`);
+            }
+            
+            const { data: pets, error } = await query.limit(30);
 
             if (error) {
                 console.error('Pet search failed:', error);
                 setSearchResults([]);
-                setPetData(null);
-                setHealthRecords([]);
+                if (!searchQuery.trim()) {
+                    setPetData(null);
+                    setHealthRecords([]);
+                }
                 setIsLoading(false);
                 return;
             }
@@ -48,11 +94,12 @@ const HealthRecords = ({ clinicId }) => {
             setSearchResults(results);
 
             if (results.length === 0) {
-                setPetData(null);
-                setHealthRecords([]);
-            } else if (!petData || !results.some((p) => p.pet_id === petData.pet_id)) {
-                selectPet(results[0]);
+                if (!searchQuery.trim()) {
+                    setPetData(null);
+                    setHealthRecords([]);
+                }
             }
+            // Removed auto-select logic to allow user to see the grid
 
             setIsLoading(false);
         };
@@ -158,28 +205,42 @@ const HealthRecords = ({ clinicId }) => {
                 )}
             </div>
 
-            {searchQuery.trim() && searchResults.length > 1 && (
-                <div className="mb-6 flex flex-wrap gap-2">
+            {searchResults.length > 0 && !petData && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8 animate-in fade-in duration-300">
                     {searchResults.map((pet) => (
-                        <button
+                        <div 
                             key={pet.pet_id}
-                            type="button"
                             onClick={() => selectPet(pet)}
-                            className={`px-4 py-2 rounded-xl text-sm font-bold border transition-colors ${
-                                petData?.pet_id === pet.pet_id
-                                    ? 'bg-brand-600 text-white border-brand-600'
-                                    : 'bg-white/5 text-slate-200 border-white/10 hover:border-brand-400'
-                            }`}
+                            className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-brand-400 hover:shadow-lg transition-all cursor-pointer flex flex-col items-center text-center group clinic-card"
                         >
-                            {pet.name}
-                            {pet.breed ? ` · ${pet.breed}` : ''}
-                        </button>
+                            <div className="w-16 h-16 rounded-full border-2 border-white/10 overflow-hidden bg-white/5 mb-4 group-hover:border-brand-400 transition-colors flex items-center justify-center">
+                                {pet.avatar_url ? (
+                                    <img src={pet.avatar_url} alt={pet.name} className="w-full h-full object-cover" />
+                                ) : (
+                                    <span className="text-[10px] uppercase font-bold text-slate-400">No Pic</span>
+                                )}
+                            </div>
+                            <h4 className="text-lg font-bold text-[color:var(--pp-text-primary)] leading-tight">{pet.name}</h4>
+                            <p className="text-xs font-semibold text-slate-500 mt-1 mb-4">{pet.breed || 'Unknown Breed'} • {pet.age ? `${pet.age} Years` : 'Age Unknown'}</p>
+                            <div className="mt-auto flex gap-2 w-full justify-center">
+                                <span className="bg-white/5 border border-white/10 text-slate-400 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest">{pet.species}</span>
+                                <span className={`px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest border ${pet.status === 'Active' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-rose-500/10 text-rose-600 border-rose-500/20'}`}>
+                                    {pet.status}
+                                </span>
+                            </div>
+                        </div>
                     ))}
                 </div>
             )}
 
             {petData ? (
-                <div className="flex-1 overflow-y-auto pr-2 pb-8 animate-in fade-in duration-300">
+                <div className="flex-1 overflow-y-auto pr-2 pb-8 animate-in slide-in-from-bottom-4 duration-300">
+                    <button 
+                        onClick={() => setPetData(null)}
+                        className="mb-6 flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-white transition-colors"
+                    >
+                        ← Back to Patients
+                    </button>
                     <div className="bg-white/5 rounded-2xl p-6 mb-8 shadow-sm border border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
                         <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
                             <div className="w-20 h-20 rounded-full border border-white/10 overflow-hidden bg-white/5/5 flex items-center justify-center shrink-0">
@@ -201,10 +262,15 @@ const HealthRecords = ({ clinicId }) => {
                             </div>
                         </div>
 
-                        <button onClick={() => setShowRecordModal(true)} className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-5 py-3 rounded-xl font-bold shadow-sm transition-colors shrink-0">
-                            <Plus className="w-5 h-5" />
-                            New Record
-                        </button>
+                        <div className="flex items-center gap-3 w-full md:w-auto">
+                            <button onClick={openEditPetModal} className="flex-1 md:flex-none flex justify-center items-center gap-2 bg-white/5 border border-white/10 hover:bg-white/10 text-white px-5 py-3 rounded-xl font-bold shadow-sm transition-colors shrink-0">
+                                Edit Info
+                            </button>
+                            <button onClick={() => setShowRecordModal(true)} className="flex-1 md:flex-none flex justify-center items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-5 py-3 rounded-xl font-bold shadow-sm transition-colors shrink-0">
+                                <Plus className="w-5 h-5" />
+                                New Record
+                            </button>
+                        </div>
                     </div>
 
                     <h4 className="font-bold text-white mb-6 flex items-center gap-2">
@@ -262,14 +328,14 @@ const HealthRecords = ({ clinicId }) => {
                         </div>
                     )}
                 </div>
-            ) : (
+            ) : !searchResults.length && !isLoading ? (
                 <div className="flex-1 flex flex-col items-center justify-center text-slate-400">
                     <FolderOpen className="w-16 h-16 mb-4 text-slate-200" />
                     <p className="font-semibold text-slate-500">
-                        {searchQuery.trim() ? 'No patients found with that name' : 'Search for a patient to load their records folder'}
+                        {searchQuery.trim() ? 'No patients found with that name' : 'No patients found in the clinic'}
                     </p>
                 </div>
-            )}
+            ) : null}
 
             {showRecordModal && (
                 <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
@@ -314,6 +380,70 @@ const HealthRecords = ({ clinicId }) => {
                                 <button type="button" onClick={() => setShowRecordModal(false)} className="flex-1 border border-white/10 text-slate-300 py-3 rounded-xl font-bold hover:bg-white/10 transition-colors">Cancel</button>
                                 <button type="submit" disabled={isSubmitting} className="flex-1 bg-brand-600 text-white py-3 rounded-xl font-bold hover:bg-brand-700 shadow-sm disabled:opacity-50 transition-colors flex items-center justify-center gap-2">
                                     {isSubmitting ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div> : 'Save Record'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Edit Pet Modal */}
+            {showEditPetModal && (
+                <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+                    <div className="bg-white/5 p-8 rounded-2xl shadow-xl w-full max-w-lg animate-in zoom-in-95 duration-200">
+                        <div className="flex justify-between items-center mb-6">
+                            <h3 className="text-xl font-bold text-white">Edit Patient Info</h3>
+                            <button onClick={() => setShowEditPetModal(false)} className="text-slate-400 hover:text-slate-300 bg-white/5/10 hover:bg-white/5/10 p-1.5 rounded-lg transition-colors">
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
+
+                        <form onSubmit={handleUpdatePet} className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-200 mb-1.5">Name</label>
+                                <input type="text" required value={editPetForm.name} onChange={(e) => setEditPetForm({...editPetForm, name: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium" />
+                            </div>
+                            <div className="flex gap-4">
+                                <div className="flex-1">
+                                    <label className="block text-sm font-semibold text-slate-200 mb-1.5">Species</label>
+                                    <div className="relative">
+                                        <select value={editPetForm.species} onChange={(e) => setEditPetForm({...editPetForm, species: e.target.value})} className="appearance-none w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium cursor-pointer">
+                                            <option value="Dog">Dog</option>
+                                            <option value="Cat">Cat</option>
+                                            <option value="Bird">Bird</option>
+                                            <option value="Small Animal">Small Animal</option>
+                                            <option value="Reptile">Reptile</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">▼</div>
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <label className="block text-sm font-semibold text-slate-200 mb-1.5">Breed</label>
+                                    <input type="text" value={editPetForm.breed} onChange={(e) => setEditPetForm({...editPetForm, breed: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium" />
+                                </div>
+                            </div>
+                            <div className="flex gap-4">
+                                <div className="flex-1">
+                                    <label className="block text-sm font-semibold text-slate-200 mb-1.5">Age</label>
+                                    <input type="number" min="0" value={editPetForm.age} onChange={(e) => setEditPetForm({...editPetForm, age: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium" />
+                                </div>
+                                <div className="flex-1">
+                                    <label className="block text-sm font-semibold text-slate-200 mb-1.5">Status</label>
+                                    <div className="relative">
+                                        <select value={editPetForm.status} onChange={(e) => setEditPetForm({...editPetForm, status: e.target.value})} className="appearance-none w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium cursor-pointer">
+                                            <option value="Active">Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                            <option value="Deceased">Deceased</option>
+                                        </select>
+                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">▼</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="pt-6 border-t border-white/10 flex gap-3">
+                                <button type="button" onClick={() => setShowEditPetModal(false)} className="flex-1 border border-white/10 text-slate-300 py-3 rounded-xl font-bold hover:bg-white/10 transition-colors">Cancel</button>
+                                <button type="submit" disabled={isSubmitting} className="flex-1 bg-brand-600 text-white py-3 rounded-xl font-bold hover:bg-brand-700 shadow-sm disabled:opacity-50 transition-colors flex items-center justify-center gap-2">
+                                    {isSubmitting ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div> : 'Update Patient'}
                                 </button>
                             </div>
                         </form>

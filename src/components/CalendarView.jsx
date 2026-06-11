@@ -70,11 +70,32 @@ const CalendarView = ({ clinicId }) => {
 
     const handleEventClick = (info) => {
         setSelectedEvent({
+            id: info.event.id,
             client: info.event.extendedProps.client,
             reason: info.event.extendedProps.reason,
             status: info.event.extendedProps.status,
             time: info.event.extendedProps.time,
         });
+    };
+
+    const handleCancelAppointment = async (appointmentId) => {
+        const confirmed = window.confirm("Are you sure you want to cancel this appointment?");
+        if (!confirmed) return;
+
+        setIsLoading(true);
+        const { error } = await supabase
+            .from('appointments')
+            .update({ status: 'Cancelled' })
+            .eq('appointment_id', appointmentId)
+            .eq('clinic_id', clinicId);
+
+        if (error) {
+            alert('Failed to cancel appointment: ' + error.message);
+        } else {
+            setSelectedEvent(null);
+            fetchAppointmentsForCalendar();
+        }
+        setIsLoading(false);
     };
 
     const getStatusStyle = (status) => {
@@ -202,6 +223,14 @@ const CalendarView = ({ clinicId }) => {
                                     <StatusIcon className={`w-4 h-4 ${color}`} />
                                     <span className={`text-sm font-bold ${color}`}>{selectedEvent.status}</span>
                                 </div>
+                                {selectedEvent.status !== 'Completed' && selectedEvent.status !== 'Cancelled' && (
+                                    <button
+                                        onClick={() => handleCancelAppointment(selectedEvent.id)}
+                                        className="w-full py-3 border border-rose-500/30 hover:border-rose-500 text-rose-500 rounded-xl font-bold text-sm hover:bg-rose-500/10 transition-all flex items-center justify-center gap-2"
+                                    >
+                                        <X className="w-4 h-4"/> Cancel Appointment
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -215,13 +244,13 @@ const CalendarView = ({ clinicId }) => {
                     display: flex;
                     flex-direction: column;
                     --fc-border-color: var(--pp-card-border);
-                    --fc-button-bg-color: var(--pp-sky);
-                    --fc-button-border-color: var(--pp-sky);
-                    --fc-button-hover-bg-color: #3aafde;
-                    --fc-button-hover-border-color: #3aafde;
-                    --fc-button-active-bg-color: var(--pp-charcoal);
-                    --fc-button-active-border-color: var(--pp-charcoal);
-                    --fc-today-bg-color: rgba(94, 196, 240, 0.1);
+                    --fc-button-bg-color: var(--pp-primary);
+                    --fc-button-border-color: var(--pp-primary);
+                    --fc-button-hover-bg-color: var(--pp-primary-deep);
+                    --fc-button-hover-border-color: var(--pp-primary-deep);
+                    --fc-button-active-bg-color: var(--pp-primary-deep);
+                    --fc-button-active-border-color: var(--pp-primary-deep);
+                    --fc-today-bg-color: rgba(1, 75, 170, 0.08);
                     --fc-page-bg-color: transparent;
                     --fc-neutral-bg-color: var(--pp-input-bg);
                     --fc-event-text-color: #ffffff;
@@ -250,7 +279,7 @@ const CalendarView = ({ clinicId }) => {
                     font-size: 13px;
                     box-shadow: none !important;
                 }
-                .fc .fc-button:focus { outline: 2px solid #5EC4F0; outline-offset: 2px; }
+                .fc .fc-button:focus { outline: 2px solid var(--pp-primary); outline-offset: 2px; }
                 .fc .fc-button-primary:not(:disabled).fc-button-active,
                 .fc .fc-button-primary:not(:disabled):active {
                     background-color: #1A1A2E;
@@ -282,7 +311,7 @@ const CalendarView = ({ clinicId }) => {
                 .fc-timegrid-slot { height: 3rem !important; }
                 .fc-col-header-cell { background: var(--pp-input-bg); font-size: 12px; font-weight: 700; color: var(--pp-text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
                 .fc-daygrid-day-number { color: var(--pp-text-primary); font-size: 13px; font-weight: 600; }
-                .fc-day-today .fc-daygrid-day-number { color: #5EC4F0; font-weight: 800; }
+                .fc-day-today .fc-daygrid-day-number { color: var(--pp-primary); font-weight: 800; }
                 `}
             </style>
         </div>

@@ -162,12 +162,12 @@ const PatientIntake = ({ clinicId }) => {
                         {/* Owner Information */}
                         <div className="lg:col-span-2 p-8 bg-white/5/5/50 flex flex-col h-full">
                             <div className="flex items-center gap-2 mb-6">
-                                <UserPlus className="w-5 h-5 text-[#5EC4F0]" />
+                                <UserPlus className="w-5 h-5 text-[color:var(--pp-primary)]" />
                                 <h4 className="text-lg font-bold text-white">Owner Details</h4>
                             </div>
 
-                            <div className="bg-[#5EC4F0]/10 border text-xs border-[#5EC4F0]/30 p-4 rounded-xl text-slate-600 mb-6 flex gap-3 items-start shadow-sm leading-relaxed">
-                                <Info className="w-5 h-5 text-[#5EC4F0] shrink-0 mt-0.5" />
+                            <div className="bg-[var(--pp-primary)]/10 border text-xs border-[var(--pp-primary)]/30 p-4 rounded-xl text-slate-600 mb-6 flex gap-3 items-start shadow-sm leading-relaxed">
+                                <Info className="w-5 h-5 text-[color:var(--pp-primary)] shrink-0 mt-0.5" />
                                 <p><strong>Note for Walk-ins:</strong> This creates a temporary profile. The owner must download the PetPals app and link their phone number to gain digital access to records.</p>
                             </div>
 
@@ -190,7 +190,7 @@ const PatientIntake = ({ clinicId }) => {
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="w-full bg-[#5EC4F0] text-white py-4 px-4 rounded-xl font-bold hover:bg-[#3aafde] shadow-md transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
+                                    className="w-full bg-brand-600 hover:bg-brand-700 text-white py-4 px-4 rounded-xl font-bold shadow-md transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
                                 >
                                     {isSubmitting ? (
                                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>

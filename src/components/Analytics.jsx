@@ -140,13 +140,13 @@ const Analytics = ({ clinicId }) => {
                 </div>
                 <div className={`border shadow-sm p-6 rounded-2xl flex items-center justify-between ${metrics.net >= 0 ? 'bg-brand-500/10 border-brand-100' : 'bg-rose-50 border-rose-200'}`}>
                     <div>
-                        <p className={`text-xs font-bold uppercase tracking-widest mb-2 flex items-center gap-1.5 ${metrics.net >= 0 ? 'text-[#5EC4F0]' : 'text-rose-600'}`}>Net Revenue</p>
-                        <h4 className={`text-3xl font-black leading-none ${metrics.net >= 0 ? 'text-[#5EC4F0]' : 'text-rose-700'}`}>
+                        <p className={`text-xs font-bold uppercase tracking-widest mb-2 flex items-center gap-1.5 ${metrics.net >= 0 ? 'text-[color:var(--pp-primary)]' : 'text-rose-600'}`}>Net Revenue</p>
+                        <h4 className={`text-3xl font-black leading-none ${metrics.net >= 0 ? 'text-[color:var(--pp-primary)]' : 'text-rose-700'}`}>
                             EGP {(Math.abs(Number(metrics.net)) || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
                             {metrics.net < 0 && <span className="text-lg ml-1">(Loss)</span>}
                         </h4>
                     </div>
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${metrics.net >= 0 ? 'bg-[#5EC4F0]/20 text-[#5EC4F0]' : 'bg-rose-100 text-rose-600'}`}>
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${metrics.net >= 0 ? 'bg-[var(--pp-primary)]/20 text-[color:var(--pp-primary)]' : 'bg-rose-100 text-rose-600'}`}>
                         <DollarSign className="w-6 h-6" />
                     </div>
                 </div>

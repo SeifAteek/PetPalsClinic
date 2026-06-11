@@ -29,20 +29,42 @@ const SKY  = 'var(--pp-sky)';
 const NAVY = 'var(--pp-text-primary)';
 const BG   = 'var(--pp-bg)';
 
-const navigation = [
-    { id: 'appointments', label: 'Appointments',        icon: Clock },
-    { id: 'services',     label: 'Clinic Services',     icon: ClipboardList },
-    { id: 'calendar',     label: 'Visual Schedule',     icon: Calendar },
-    { id: 'history',      label: 'Appt. History',       icon: LayoutDashboard },
-    { id: 'intake',       label: 'Patient Intake',      icon: Users },
-    { id: 'records',      label: 'Health Records',      icon: HeartPulse },
-    { id: 'chat',         label: 'Client Chat',         icon: MessageSquare },
-    { id: 'inventory',    label: 'Inventory',           icon: PackageSearch },
-    { id: 'billing',      label: 'Billing & Invoices',  icon: Receipt },
-    { id: 'analytics',    label: 'Analytics',           icon: TrendingUp },
-    { id: 'staff',        label: 'Staff',               icon: Users },
-    { id: 'settings',     label: 'Settings',            icon: SettingsIcon },
+const navigationGroups = [
+    {
+        label: 'SCHEDULING',
+        items: [
+            { id: 'appointments', label: 'Appointments',  icon: Clock },
+            { id: 'calendar',     label: 'Visual Schedule', icon: Calendar },
+            { id: 'history',      label: 'Appt. History',  icon: LayoutDashboard },
+        ],
+    },
+    {
+        label: 'PATIENT CARE',
+        items: [
+            { id: 'intake',   label: 'Patient Intake', icon: Users },
+            { id: 'records',  label: 'Health Records', icon: HeartPulse },
+            { id: 'chat',     label: 'Client Chat',    icon: MessageSquare },
+        ],
+    },
+    {
+        label: 'OPERATIONS',
+        items: [
+            { id: 'services',   label: 'Clinic Services',   icon: ClipboardList },
+            { id: 'inventory',  label: 'Inventory',          icon: PackageSearch },
+            { id: 'billing',    label: 'Billing & Invoices', icon: Receipt },
+        ],
+    },
+    {
+        label: 'MANAGEMENT',
+        items: [
+            { id: 'analytics', label: 'Analytics', icon: TrendingUp },
+            { id: 'staff',     label: 'Staff',     icon: Users },
+            { id: 'settings',  label: 'Settings',  icon: SettingsIcon },
+        ],
+    },
 ];
+// Flat list for backwards-compat (e.g. CalendarView default tab)
+const navigation = navigationGroups.flatMap(g => g.items);
 
 /* ── Sidebar styles ─────────────────────────────────────────────────── */
 const sidebarBase = {
@@ -142,8 +164,8 @@ const ClinicDashboard = () => {
                 <div style={{ padding: sidebarCollapsed ? '20px 0' : '20px 16px', display: 'flex', alignItems: 'center', justifyContent: sidebarCollapsed ? 'center' : 'space-between', borderBottom: '1px solid var(--pp-card-border)', flexShrink: 0 }}>
                     {!sidebarCollapsed && (
                         <div style={{ display: 'flex', alignItems: 'center', gap: 8, overflow: 'hidden' }}>
-                            <PetPalsBrand logoSize="md" />
-                            <span style={{ fontSize: 16, fontWeight: 800, color: '#5EC4F0', letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>Clinic App</span>
+                            <PetPalsBrand logoSize="lg" />
+                            <span style={{ fontSize: 16, fontWeight: 800, color: 'var(--pp-primary)', letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>Clinic App</span>
                         </div>
                     )}
                     {sidebarCollapsed && (
@@ -162,54 +184,66 @@ const ClinicDashboard = () => {
                 </div>
 
                 {/* Nav items */}
-                <nav style={{ flex: 1, padding: '12px 8px', display: 'flex', flexDirection: 'column', gap: 2 }} role="navigation">
-                    {navigation.map(item => {
-                        const isActive = activeTab === item.id;
-                        return (
-                            <button
-                                key={item.id}
-                                onClick={() => setActiveTab(item.id)}
-                                title={sidebarCollapsed ? item.label : undefined}
-                                aria-current={isActive ? 'page' : undefined}
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 10,
-                                    padding: sidebarCollapsed ? '10px 0' : '10px 12px',
-                                    justifyContent: sidebarCollapsed ? 'center' : 'flex-start',
-                                    borderRadius: 10,
-                                    border: 'none',
-                                    cursor: 'pointer',
-                                    transition: 'background 0.12s, color 0.12s',
-                                    fontWeight: isActive ? 700 : 500,
-                                    fontSize: 13,
-                                    whiteSpace: 'nowrap',
-                                    overflow: 'hidden',
-                                    background: isActive ? SKY : 'transparent',
-                                    color:      isActive ? '#FFFFFF' : 'var(--pp-text-secondary)',
-                                    width: '100%',
-                                    textAlign: 'left',
-                                    outline: 'none',
-                                }}
-                                onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = 'var(--pp-bg)'; }}
-                                onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent'; }}
-                                onFocus={e => { if (!isActive) e.currentTarget.style.background = 'var(--pp-bg)'; }}
-                                onBlur={e => { if (!isActive) e.currentTarget.style.background = 'transparent'; }}
-                            >
-                                <item.icon
-                                    style={{
-                                        width: 18, height: 18,
-                                        flexShrink: 0,
-                                        color: isActive ? '#FFFFFF' : '#5EC4F0',
-                                    }}
-                                    aria-hidden="true"
-                                />
-                                {!sidebarCollapsed && (
-                                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.label}</span>
-                                )}
-                            </button>
-                        );
-                    })}
+                <nav style={{ flex: 1, padding: '12px 8px', display: 'flex', flexDirection: 'column', gap: 2, overflowY: 'auto' }} role="navigation">
+                    {navigationGroups.map((group) => (
+                        <div key={group.label}>
+                            {!sidebarCollapsed && (
+                                <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', color: 'var(--pp-text-muted)', padding: '12px 12px 4px', textTransform: 'uppercase' }}>
+                                    {group.label}
+                                </p>
+                            )}
+                            {sidebarCollapsed && (
+                                <div style={{ height: 1, background: 'var(--pp-card-border)', margin: '8px 4px 4px' }} />
+                            )}
+                            {group.items.map(item => {
+                                const isActive = activeTab === item.id;
+                                return (
+                                    <button
+                                        key={item.id}
+                                        onClick={() => setActiveTab(item.id)}
+                                        title={sidebarCollapsed ? item.label : undefined}
+                                        aria-current={isActive ? 'page' : undefined}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 10,
+                                            padding: sidebarCollapsed ? '10px 0' : '10px 12px',
+                                            justifyContent: sidebarCollapsed ? 'center' : 'flex-start',
+                                            borderRadius: 10,
+                                            border: 'none',
+                                            cursor: 'pointer',
+                                            transition: 'background 0.12s, color 0.12s',
+                                            fontWeight: isActive ? 700 : 500,
+                                            fontSize: 13,
+                                            whiteSpace: 'nowrap',
+                                            overflow: 'hidden',
+                                            background: isActive ? SKY : 'transparent',
+                                            color: isActive ? 'var(--pp-text-on-brand)' : 'var(--pp-text-secondary)',
+                                            width: '100%',
+                                            textAlign: 'left',
+                                            outline: 'none',
+                                        }}
+                                        onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = 'var(--pp-bg)'; }}
+                                        onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent'; }}
+                                        onFocus={e => { if (!isActive) e.currentTarget.style.background = 'var(--pp-bg)'; }}
+                                        onBlur={e => { if (!isActive) e.currentTarget.style.background = 'transparent'; }}
+                                    >
+                                        <item.icon
+                                            style={{
+                                                width: 18, height: 18,
+                                                flexShrink: 0,
+                                                color: isActive ? 'var(--pp-text-on-brand)' : 'var(--pp-primary)',
+                                            }}
+                                            aria-hidden="true"
+                                        />
+                                        {!sidebarCollapsed && (
+                                            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.label}</span>
+                                        )}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    ))}
                 </nav>
 
                 {/* Bottom: theme toggle + logout */}
@@ -291,7 +325,7 @@ const ClinicDashboard = () => {
                             width: 34, height: 34, borderRadius: '50%',
                             background: SKY,
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            fontWeight: 700, fontSize: 13, color: '#fff', flexShrink: 0,
+                            fontWeight: 700, fontSize: 13, color: 'var(--pp-text-on-brand)', flexShrink: 0,
                         }}
                     >
                         {clinicData.name.charAt(0).toUpperCase()}
@@ -313,17 +347,17 @@ const ClinicDashboard = () => {
                         }}
                     >
                         <div>
-                            <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.75)', textTransform: 'uppercase', margin: 0 }}>
+                            <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.08em', color: 'var(--pp-text-on-brand)', opacity: 0.75, textTransform: 'uppercase', margin: 0 }}>
                                 PetPals Clinic
                             </p>
-                            <h2 style={{ fontSize: 20, fontWeight: 800, color: '#FFFFFF', margin: '4px 0 2px' }}>
+                            <h2 style={{ fontSize: 20, fontWeight: 800, color: 'var(--pp-text-on-brand)', margin: '4px 0 2px' }}>
                                 {clinicData.name}
                             </h2>
-                            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', margin: 0 }}>
+                            <p style={{ fontSize: 13, color: 'var(--pp-text-on-brand)', opacity: 0.8, margin: 0 }}>
                                 {currentTab.label}
                             </p>
                         </div>
-                        <HeartPulse style={{ width: 56, height: 56, color: 'rgba(255,255,255,0.25)', flexShrink: 0 }} aria-hidden="true" />
+                        <HeartPulse style={{ width: 56, height: 56, color: 'var(--pp-text-on-brand)', opacity: 0.25, flexShrink: 0 }} aria-hidden="true" />
                     </div>
                 )}
 
@@ -345,7 +379,7 @@ const ClinicDashboard = () => {
                     {activeTab === 'appointments' && <Appointments clinicId={clinicData.clinic_id} clinicData={clinicData} />}
                     {activeTab === 'services'     && <ClinicServices clinicId={clinicData.clinic_id} />}
                     {activeTab === 'calendar'     && <CalendarView clinicId={clinicData.clinic_id} />}
-                    {activeTab === 'history'      && <AppointmentHistory clinicId={clinicData.clinic_id} />}
+                    {activeTab === 'history'      && <AppointmentHistory clinicId={clinicData.clinic_id} clinicData={clinicData} />}
                     {activeTab === 'intake'       && <PatientIntake clinicId={clinicData.clinic_id} />}
                     {activeTab === 'records'      && <HealthRecords clinicId={clinicData.clinic_id} />}
                     {activeTab === 'chat'         && <ClientChat clinicId={clinicData.clinic_id} />}

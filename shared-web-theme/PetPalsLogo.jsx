@@ -13,6 +13,7 @@ const SIZE_CLASS = {
   md: 'h-10 w-[7rem]',
   lg: 'h-12 w-[8.5rem]',
   xl: 'h-16 w-[11rem]',
+  '1.5xl': 'h-20 w-[13.5rem]',
   '2xl': 'h-24 w-[16rem]',
   hero: 'h-28 w-[18rem]',
 };

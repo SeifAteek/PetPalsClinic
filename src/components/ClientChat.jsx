@@ -201,7 +201,7 @@ const ClientChat = ({ clinicId }) => {
             {/* Sidebar: Client List */}
             <div className="w-1/3 max-w-sm border-r border-white/10 bg-white/5/5 flex flex-col">
                 <div className="p-5 border-b border-white/10">
-                    <h3 className="text-lg font-bold text-white mb-4">Messages</h3>
+                    <h3 className="text-lg font-bold text-[color:var(--pp-text-primary)] mb-4">Messages</h3>
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <Search className="h-4 w-4 text-slate-400" />
@@ -237,7 +237,7 @@ const ClientChat = ({ clinicId }) => {
                                         <UserCircle2 className="w-6 h-6" />
                                     </div>
                                     <div className="overflow-hidden">
-                                        <p className={`font-semibold truncate text-sm ${activeClient?.user_id === client.user_id ? 'text-brand-900' : 'text-slate-200'}`}>
+                                        <p className={`font-semibold truncate text-sm ${activeClient?.user_id === client.user_id ? 'text-[color:var(--pp-primary)]' : 'text-[color:var(--pp-text-primary)]'}`}>
                                             {client.user_name}
                                         </p>
                                         <p className="text-xs text-slate-500 truncate">Tap to open chat</p>
@@ -259,7 +259,7 @@ const ClientChat = ({ clinicId }) => {
                                     <UserCircle2 className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-white leading-tight">{activeClient.user_name}</h3>
+                                    <h3 className="font-bold text-[color:var(--pp-text-primary)] leading-tight">{activeClient.user_name}</h3>
                                     <p className="text-xs font-medium text-brand-400 flex items-center gap-1"><Info className="w-3 h-3"/> Active Client</p>
                                 </div>
                             </div>
@@ -284,7 +284,7 @@ const ClientChat = ({ clinicId }) => {
                                             <div className={`max-w-[70%] sm:max-w-md flex flex-col ${isClinic ? 'items-end' : 'items-start'}`}>
                                                 <div className={`px-5 py-3 shadow-sm text-sm ${
                                                     isClinic
-                                                        ? 'bg-brand-600 text-[#1A1A2E] font-medium rounded-2xl rounded-tr-sm'
+                                                        ? 'bg-brand-600 text-white font-medium rounded-2xl rounded-tr-sm'
                                                         : 'clinic-card border-white/10 text-[color:var(--pp-text-primary)] rounded-2xl rounded-tl-sm'
                                                 }`}>
                                                     <p className="leading-relaxed">{msg.text}</p>
@@ -309,7 +309,7 @@ const ClientChat = ({ clinicId }) => {
                                     value={chatInput}
                                     onChange={(e) => setChatInput(e.target.value)}
                                     placeholder={`Message ${activeClient.user_name}...`}
-                                    className="w-full pl-5 pr-14 py-3.5 bg-white/5/5 border border-white/10 rounded-full text-sm text-white outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white/5 transition-all shadow-inner"
+                                    className="w-full pl-5 pr-14 py-3.5 bg-white/5/5 border border-white/10 rounded-full text-sm text-[color:var(--pp-text-primary)] outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white/5 transition-all shadow-inner"
                                 />
                                 <button
                                     type="submit"

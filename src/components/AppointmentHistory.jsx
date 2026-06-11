@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { Search, Calendar, History, FileText, CheckCircle2, Clock, XCircle, AlertTriangle, Receipt } from 'lucide-react';
+import InvoicePreviewModal from './InvoicePreviewModal';
 
-const AppointmentHistory = ({ clinicId }) => {
+const AppointmentHistory = ({ clinicId, clinicData }) => {
     const [history, setHistory] = useState([]);
     const [filteredHistory, setFilteredHistory] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+    const [pendingInvoice, setPendingInvoice] = useState(null);
 
     const fetchHistory = async () => {
         setIsLoading(true);
@@ -18,13 +20,15 @@ const AppointmentHistory = ({ clinicId }) => {
                 reason,
                 status,
                 profiles(user_name),
-                invoices(total_amount, status)
+                invoices(invoice_id, total_amount, status, issue_date, due_date, payment_method)
             `)
             .eq('clinic_id', clinicId)
             .in('status', ['Completed', 'Cancelled', 'Missed'])
             .order('appointment_date', { ascending: false });
 
-        if (!error) {
+        if (error) {
+            console.error('AppointmentHistory fetch error:', error);
+        } else {
             setHistory(data || []);
             setFilteredHistory(data || []);
         }
@@ -48,6 +52,45 @@ const AppointmentHistory = ({ clinicId }) => {
         });
         setFilteredHistory(filtered);
     }, [searchQuery, history]);
+
+    const handleCardClick = async (apt) => {
+        if (!apt.invoices || apt.invoices.length === 0) return;
+        const invoice = apt.invoices[0];
+        
+        const { data: receipt } = await supabase.from('clinic_receipts').select('items_snapshot, receipt_number').eq('appointment_id', apt.appointment_id).single();
+        
+        if (receipt && receipt.items_snapshot) {
+            const snap = receipt.items_snapshot;
+            setPendingInvoice({
+                clinic: clinicData,
+                invoiceNumber: invoice.invoice_id ? invoice.invoice_id.substring(0, 8).toUpperCase() : 'N/A',
+                receiptNumber: receipt.receipt_number,
+                issueDate: invoice.issue_date || apt.appointment_date,
+                dueDate: invoice.due_date || apt.appointment_date,
+                clientName: apt.profiles?.user_name || 'Walk-in Client',
+                paymentMethod: invoice.payment_method || 'N/A',
+                paymentStatus: invoice.status,
+                procedures: snap.procedures || [],
+                items: (snap.items || []).map(i => ({ item: { item_name: i.name, unit_price: i.unit_price }, qty: i.quantity })),
+                total: invoice.total_amount
+            });
+        } else {
+            const { data: usage } = await supabase.from('appointment_usage').select('quantity_used, inventory_items(item_name, unit_price)').eq('appointment_id', apt.appointment_id);
+            setPendingInvoice({
+                clinic: clinicData,
+                invoiceNumber: invoice.invoice_id ? invoice.invoice_id.substring(0, 8).toUpperCase() : 'N/A',
+                receiptNumber: null,
+                issueDate: invoice.issue_date || apt.appointment_date,
+                dueDate: invoice.due_date || apt.appointment_date,
+                clientName: apt.profiles?.user_name || 'Walk-in Client',
+                paymentMethod: invoice.payment_method || 'N/A',
+                paymentStatus: invoice.status,
+                procedures: [],
+                items: (usage || []).map(u => ({ item: { item_name: u.inventory_items?.item_name, unit_price: u.inventory_items?.unit_price }, qty: u.quantity_used })),
+                total: invoice.total_amount
+            });
+        }
+    };
 
     return (
         <div className="flex flex-col h-full">
@@ -80,7 +123,7 @@ const AppointmentHistory = ({ clinicId }) => {
                     <div className="flex flex-col items-center justify-center p-16 text-center border-2 border-dashed border-white/10 rounded-2xl bg-white/5/50">
                         <History className="w-16 h-16 text-slate-300 mb-4" />
                         <h4 className="text-lg font-bold text-slate-200">{searchQuery ? 'No matching records' : 'No history found'}</h4>
-                        <p className="text-slate-500 mt-1 max-w-sm">No completed, cancelled, or missed appointments match your criteria.</p>
+                        <p className="text-slate-500 mt-1 max-w-sm">{searchQuery ? 'No appointments match your criteria.' : 'Review past visits, cancellations, and associated billing.'}</p>
                     </div>
                 ) : (
                     <div className="space-y-4">
@@ -98,7 +141,7 @@ const AppointmentHistory = ({ clinicId }) => {
                             const StatusIcon = isCompleted ? CheckCircle2 : isMissed ? AlertTriangle : XCircle;
 
                             return (
-                                <div key={apt.appointment_id} className={`group bg-white/5 p-6 rounded-2xl border shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row justify-between items-start md:items-center gap-6 ${isMissed ? 'border-orange-100' : 'border-white/10'}`}>
+                                <div key={apt.appointment_id} onClick={() => handleCardClick(apt)} className={`group ${invoice ? 'cursor-pointer' : ''} bg-white/5 p-6 rounded-2xl border shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row justify-between items-start md:items-center gap-6 ${isMissed ? 'border-orange-100' : 'border-white/10'}`}>
                                     <div className="flex-1">
                                         <div className="flex items-center gap-3 mb-2">
                                             <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider ${statusStyle}`}>
@@ -143,6 +186,13 @@ const AppointmentHistory = ({ clinicId }) => {
                     </div>
                 )}
             </div>
+
+            {pendingInvoice && (
+                <InvoicePreviewModal
+                    invoiceData={pendingInvoice}
+                    onClose={() => setPendingInvoice(null)}
+                />
+            )}
         </div>
     );
 };

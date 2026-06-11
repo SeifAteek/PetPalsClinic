@@ -7,21 +7,21 @@
 /* ─── Semantic tokens (iOS adaptive colors) ─── */
 html.light {
   color-scheme: light;
-  /* ── New PawCare-inspired palette ── */
-  --pp-sky:            #5EC4F0;
+  /* ── Royal Blue + Light Cream palette ── */
+  --pp-sky:            #014BAA;
   --pp-charcoal:       #1A1A2E;
-  --pp-bg:             #F0F4F8;
+  --pp-bg:             #FDFAF6;
 
   /* Keep legacy names for backward compat, map to new values */
-  --pp-honeydew:       #F0F4F8;
+  --pp-honeydew:       #FDFAF6;
   --pp-blush:          #F7C5C6;
   --pp-almond:         #e5d4c5;
-  --pp-cerulean:       #5EC4F0;
-  --pp-navy:           #1A1A2E;
+  --pp-cerulean:       #014BAA;
+  --pp-navy:           #014BAA;
 
-  --pp-primary:        #5EC4F0;
-  --pp-primary-deep:   #1A1A2E;
-  --pp-text-primary:   #1A1A2E;
+  --pp-primary:        #014BAA;
+  --pp-primary-deep:   #012F6E;
+  --pp-text-primary:   #0D1B3E;
   --pp-text-secondary: #4B5563;
   --pp-text-muted:     #9CA3AF;
   --pp-text-on-brand:  #ffffff;
@@ -30,22 +30,22 @@ html.light {
   --pp-card-tint:      none;
   --pp-glass-stroke:   none;
 
-  --pp-brand-gradient: #5EC4F0;
+  --pp-brand-gradient: #014BAA;
 
-  --pp-shadow-raised:   0 2px 8px rgba(0,0,0,0.03);
-  --pp-shadow-floating: 0 4px 16px rgba(0,0,0,0.04);
-  --pp-shadow-resting:  0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.01);
+  --pp-shadow-raised:   0 2px 8px rgba(1,75,170,0.08);
+  --pp-shadow-floating: 0 4px 16px rgba(1,75,170,0.10);
+  --pp-shadow-resting:  0 1px 3px rgba(1,75,170,0.05), 0 1px 2px rgba(1,75,170,0.03);
 
-  --pp-sidebar-bg:     #FFFFFF;
-  --pp-header-bg:      #FFFFFF;
+  --pp-sidebar-bg:     #FDFAF6;
+  --pp-header-bg:      #FDFAF6;
 
   --pp-chrome-highlight: none;
   --pp-bar-tint:         none;
 
-  --pp-card-border:    #F3F4F6;
-  --pp-input-bg:       #F9FAFB;
-  --pp-input-border:   #E5E7EB;
-  --pp-overlay:        rgba(26, 26, 46, 0.3);
+  --pp-card-border:    #EBE8E2;
+  --pp-input-bg:       #FAF8F4;
+  --pp-input-border:   #DDD9D2;
+  --pp-overlay:        rgba(1, 75, 170, 0.25);
 
   --pp-r-sm: 8px;
   --pp-r-md: 12px;
@@ -62,35 +62,35 @@ html.light {
 html.dark {
   color-scheme: dark;
   /* ── Flat, Clean Dark Theme matching the new Light UI ── */
-  --pp-sky:            #5EC4F0;
+  --pp-sky:            #7994E3;
   --pp-charcoal:       #1A1A2E;
-  --pp-bg:             #0F172A;
+  --pp-bg:             #080E1F;
 
-  --pp-honeydew:       #0F172A;
+  --pp-honeydew:       #080E1F;
   --pp-blush:          #F7C5C6;
   --pp-almond:         #e5d4c5;
-  --pp-cerulean:       #5EC4F0;
-  --pp-navy:           #0F172A;
+  --pp-cerulean:       #7994E3;
+  --pp-navy:           #080E1F;
 
-  --pp-primary:        #5EC4F0;
-  --pp-primary-deep:   #0F172A;
+  --pp-primary:        #7994E3;
+  --pp-primary-deep:   #080E1F;
   --pp-text-primary:   #F8FAFC;
   --pp-text-secondary: #94A3B8;
   --pp-text-muted:     #64748B;
-  --pp-text-on-brand:  #ffffff;
+  --pp-text-on-brand:  #FFFFFF;
 
   --pp-card-bg:        #1E293B;
   --pp-card-tint:      none;
   --pp-glass-stroke:   none;
 
-  --pp-brand-gradient: #5EC4F0;
+  --pp-brand-gradient: #7994E3;
 
   --pp-shadow-raised:   0 2px 8px rgba(0,0,0,0.3);
   --pp-shadow-floating: 0 4px 16px rgba(0,0,0,0.4);
   --pp-shadow-resting:  0 1px 3px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.1);
 
-  --pp-sidebar-bg:     #1E293B;
-  --pp-header-bg:      #1E293B;
+  --pp-sidebar-bg:     #080E1F;
+  --pp-header-bg:      #080E1F;
 
   --pp-chrome-highlight: none;
   --pp-bar-tint:         none;
@@ -759,9 +759,9 @@ html.dark {
   /* Modal / drawer overlays */
   .fixed.inset-0[class*='bg-slate'],
   .fixed.inset-0[class*='backdrop-blur'] {
-    background: var(--pp-overlay) !important;
-    backdrop-filter: blur(16px) saturate(140%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+    background: rgba(15, 23, 42, 0.4) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
   /* Dashed empty states */
@@ -777,7 +777,11 @@ html.dark {
     color: var(--pp-text-on-brand) !important;
   }
 
-  html.light .text-white:not(.on-brand):not(.keep-white):not(.on-brand *),
+  /* text-white on plain (light) backgrounds → dark; but NOT inside coloured buttons */
+  html.light :not(button):not(a):not([role="button"]):not(.btn-primary):not(.btn-secondary).text-white:not(.on-brand):not(.keep-white),
+  html.light button.text-white:not([class*="bg-brand-"]):not([class*="bg-slate-9"]):not([class*="bg-emerald-"]):not([class*="bg-rose-"]):not([class*="bg-red-"]):not([class*="bg-amber-"]):not([class*="bg-green-"]):not([class*="bg-indigo-"]):not(.btn-primary) {
+    color: var(--pp-text-primary) !important;
+  }
   html.light .text-slate-900,
   html.light .text-slate-800 {
     color: var(--pp-text-primary) !important;
@@ -827,21 +831,149 @@ html.dark {
     background: var(--pp-card-bg) !important;
     backdrop-filter: blur(40px) saturate(180%);
   }
+  /* bg-slate-900 should NOT be transparent in light mode — used for dark buttons like Walk-in */
   html.light .bg-slate-900,
-  html.light .bg-slate-950,
+  html.light .bg-slate-950 {
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+  }
   html.dark .bg-slate-900,
   html.dark .bg-slate-950 {
-    background: transparent !important;
+    background: #111827 !important;
+    color: #FFFFFF !important;
   }
 
-  html.light .bg-brand-600,
-  html.light .bg-brand-700,
-  html.light .hover\:bg-brand-700:hover,
+  /* Force brand backgrounds and white text globally for high contrast */
+  :root .bg-brand-600,
+  :root .bg-brand-700,
+  :root .hover\:bg-brand-700:hover,
+  html:not(.dark) .bg-brand-600,
+  html:not(.dark) .bg-brand-700,
+  html:not(.dark) .hover\:bg-brand-700:hover,
   html.dark .bg-brand-600,
   html.dark .bg-brand-700 {
     background: var(--pp-brand-gradient) !important;
-    color: var(--pp-text-on-brand) !important;
+    color: #FFFFFF !important;
   }
+  
+  /* ─── UNIVERSAL BUTTON TEXT FIX ─────────────────────────────────────
+     Force white text on ALL brand/primary-colored buttons and links.
+     Uses both the Tailwind class names AND a computed-style fallback
+     so that both JIT and pre-compiled class names are covered.
+  ─────────────────────────────────────────────────────────────────── */
+
+  /* By Tailwind class name (covers all variants) */
+  .bg-brand-600, .bg-brand-700,
+  .hover\:bg-brand-600:hover, .hover\:bg-brand-700:hover,
+  .disabled\:bg-brand-600:disabled {
+    color: #FFFFFF !important;
+  }
+
+  /* By CSS variable (covers bg-[var(--pp-primary)] pattern) */
+  button, a, span, div {
+    /* nothing here — see below */
+  }
+
+  /* Explicit overrides for every known button variant in the app */
+  .bg-brand-600 *,
+  .bg-brand-700 * {
+    color: #FFFFFF !important;
+  }
+
+  /* PatientIntake Register button uses bg-[var(--pp-primary)] */
+  [class*="bg-\\[var"] {
+    color: #FFFFFF !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     AUTHORITATIVE BUTTON WHITE-TEXT OVERRIDE — must come AFTER any
+     html.light .text-white rule so specificity wins.
+     Covers every coloured-background button variant in the entire app.
+  ═══════════════════════════════════════════════════════════════════ */
+
+  /* The element itself */
+  html.light button[class*="bg-brand-"],
+  html.light button[class*="bg-slate-9"],
+  html.light button[class*="bg-emerald-"],
+  html.light button[class*="bg-rose-"],
+  html.light button[class*="bg-red-"],
+  html.light button[class*="bg-amber-"],
+  html.light button[class*="bg-green-"],
+  html.light button[class*="bg-indigo-"],
+  html.light a[class*="bg-brand-"],
+  html.light a[class*="bg-slate-9"],
+  html.light a[class*="bg-emerald-"],
+  html.light a[class*="bg-rose-"],
+  html.light a[class*="bg-red-"],
+  html.light a[class*="bg-amber-"],
+  html.light a[class*="bg-green-"],
+  html.light a[class*="bg-indigo-"],
+  html.light .btn-primary {
+    color: #ffffff !important;
+  }
+
+  /* Child elements (icons, spinners, spans) inside coloured buttons */
+  html.light button[class*="bg-brand-"] *,
+  html.light button[class*="bg-slate-9"] *,
+  html.light button[class*="bg-emerald-"] *,
+  html.light button[class*="bg-rose-"] *,
+  html.light button[class*="bg-red-"] *,
+  html.light button[class*="bg-amber-"] *,
+  html.light button[class*="bg-green-"] *,
+  html.light button[class*="bg-indigo-"] *,
+  html.light a[class*="bg-brand-"] *,
+  html.light a[class*="bg-slate-9"] *,
+  html.light a[class*="bg-emerald-"] *,
+  html.light a[class*="bg-rose-"] *,
+  html.light a[class*="bg-red-"] *,
+  html.light a[class*="bg-amber-"] *,
+  html.light a[class*="bg-green-"] *,
+  html.light a[class*="bg-indigo-"] *,
+  html.light .btn-primary * {
+    color: #ffffff !important;
+  }
+
+  /* Spans used as badge-style buttons (e.g. Settings "Change Image") */
+  html.light span[class*="bg-brand-"],
+  html.light span[class*="bg-slate-9"],
+  html.light span[class*="bg-emerald-"],
+  html.light span[class*="bg-rose-"],
+  html.light span[class*="bg-red-"],
+  html.light span[class*="bg-amber-"] {
+    color: #ffffff !important;
+  }
+
+  /* text-brand-800/900 in light mode → dark primary (readable on cream bg) */
+  html.light .text-brand-800,
+  html.light .text-brand-900 {
+    color: var(--pp-text-primary) !important;
+  }
+
+  /* text-brand-800/900 in dark mode → primary blue (readable on dark bg) */
+  html.dark .text-brand-800,
+  html.dark .text-brand-900 {
+    color: var(--pp-primary) !important;
+  }
+  
+  /* ─── Fix secondary text contrast - LIGHT MODE ONLY ─────────────────
+     These overrides only apply in html.light so dark mode isn't broken.
+  ─────────────────────────────────────────────────────────────────── */
+  html.light .text-slate-100 { color: #1E293B !important; }
+  html.light .text-slate-200 { color: #1E293B !important; }
+  html.light .text-slate-300 { color: #334155 !important; }
+  html.light .text-slate-400 { color: #475569 !important; }
+  html.light .text-slate-500 { color: #64748B !important; }
+  html.light .border-white\/10 { border-color: rgba(0,0,0,0.06) !important; }
+  
+  /* Make "glass" backgrounds pure white in light mode to contrast with cream body */
+  html.light .bg-white\/5 { background-color: #FFFFFF !important; }
+  html.light .bg-white\/5\/5 { background-color: #FFFFFF !important; }
+  html.light .bg-white\/5\/10 { background-color: #FFFFFF !important; }
+  html.light .hover\:bg-white\/10:hover { background-color: #F8FAFC !important; }
+  html.light .hover\:bg-white\/5\/10:hover { background-color: #F8FAFC !important; }
+  
+  /* text-white always stays white (used on colored backgrounds) */
+  .text-white { color: #FFFFFF !important; }
 
   html.light .border-slate-100,
   html.light .border-slate-200,
@@ -887,7 +1019,8 @@ html.dark {
   }
 
   /* ── Light-mode text color fixes ── */
-  html.light .text-white:not(.on-brand):not(.keep-white) {
+  /* text-white on plain backgrounds → dark text (same exclusions as above) */
+  html.light :not(button):not(a):not([role="button"]):not(.btn-primary):not(.btn-secondary).text-white:not(.on-brand):not(.keep-white) {
     color: var(--pp-text-primary) !important;
   }
   html.light .text-slate-900,
